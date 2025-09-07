@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_cast
+
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../models/project_model.dart';
 
@@ -32,7 +34,6 @@ class SupabaseService {
           .map((json) => ProjectModel.fromJson(json as Map<String, dynamic>))
           .toList();
     } catch (e) {
-      print('خطا در دریافت پروژه‌ها: $e');
       return [];
     }
   }
@@ -48,7 +49,6 @@ class SupabaseService {
 
       return ProjectModel.fromJson(response as Map<String, dynamic>);
     } catch (e) {
-      print('خطا در دریافت پروژه: $e');
       return null;
     }
   }
@@ -64,7 +64,6 @@ class SupabaseService {
 
       return ProjectModel.fromJson(response as Map<String, dynamic>);
     } catch (e) {
-      print('خطا در اضافه کردن پروژه: $e');
       return null;
     }
   }
@@ -81,7 +80,6 @@ class SupabaseService {
 
       return ProjectModel.fromJson(response as Map<String, dynamic>);
     } catch (e) {
-      print('خطا در به‌روزرسانی پروژه: $e');
       return null;
     }
   }
@@ -96,7 +94,6 @@ class SupabaseService {
 
       return true;
     } catch (e) {
-      print('خطا در حذف پروژه: $e');
       return false;
     }
   }
@@ -127,7 +124,6 @@ class SupabaseService {
       
       return projects;
     } catch (e) {
-      print('خطا در دریافت پروژه‌ها با فیلتر: $e');
       return [];
     }
   }

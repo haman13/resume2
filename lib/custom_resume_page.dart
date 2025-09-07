@@ -456,7 +456,7 @@ class _CustomResumePageState extends State<CustomResumePage> {
   Widget _buildMainContent() {
     switch (_selectedSection) {
       case 'درباره من':
-        return AboutSection();
+        return const AboutSection();
       case 'مهارت‌ها':
         return const SkillsSection();
       case 'سوابق':

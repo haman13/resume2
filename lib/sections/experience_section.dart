@@ -17,7 +17,7 @@ class ExperienceSection extends StatelessWidget {
           backgroundColor: AppTheme.greenCardBackground(context),
           child: Column(
             children: [
-              ExperienceItem(
+              const ExperienceItem(
                 role: 'بازایاب بیمه عمر',
                 company: 'شرکت بیمه پاسارگاد',
                 duration: '1390 - 1392',
@@ -27,7 +27,7 @@ class ExperienceSection extends StatelessWidget {
                 ],
               ),
               Divider(height: ResponsiveHelper.getProportionateSpacing(3.2)),
-              ExperienceItem(
+              const ExperienceItem(
                 role: 'بازاریاب شرکت های نتورک مارکتینگ و شبکه ای',
                 company: 'شرکت های بادران و بیز',
                 duration: '1392 - 1396',
@@ -37,7 +37,7 @@ class ExperienceSection extends StatelessWidget {
                 ],
               ),
               Divider(height: ResponsiveHelper.getProportionateSpacing(3.2)),
-              ExperienceItem(
+              const ExperienceItem(
                 role: 'کارشناس فروش امور سازمانی و دولتی',
                 company: '(کندو SMS)شرکت فرهنگ و توسعه کندو',
                 duration: '1396 - اکنون',
@@ -54,7 +54,7 @@ class ExperienceSection extends StatelessWidget {
           title: ' تجربیات شغلی در زمینه برنامه نویسی',
           initiallyExpanded: true,
           backgroundColor: AppTheme.greenCardBackground(context),
-          child: Column(
+          child: const Column(
             children: [
               ExperienceItem(
                 role: 'تازه کار حوزه برنامه نویسی',
