@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_final_fields, unused_field
 
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../widgets/expandable_card.dart';
 import '../utils/responsive_helper.dart';
@@ -20,13 +21,13 @@ class _AboutSectionState extends State<AboutSection> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ExpandableCard(
-          title: 'معرفی',
+          title: AppLocalizations.of(context).aboutIntroTitle,
           initiallyExpanded: true,
           backgroundColor: AppTheme.greenCardBackground(context),
           child: Column(
             children: [
               Text(
-                'من یه تازه کار حوزه فلاتر و علاقه مند به یادگیری تکنولوژی های جدید و حل مسائل پیچیده هستم.',
+                AppLocalizations.of(context).aboutIntroP1,
                 style: TextStyle(
                   fontSize: ResponsiveHelper.getProportionateFontSize(1.6),
                   fontWeight: FontWeight.bold,
@@ -35,7 +36,7 @@ class _AboutSectionState extends State<AboutSection> {
               ),
               SizedBox(height: ResponsiveHelper.getProportionateSpacing(1.2)),
               Text(
-                'علاقه خاصی به بازی و ریاضی و حل سوالات مفهومی و ریاضی دارم',
+                AppLocalizations.of(context).aboutIntroP2,
                 style: TextStyle(
                   fontSize: ResponsiveHelper.getProportionateFontSize(1.6),
                   fontWeight: FontWeight.bold,
@@ -47,13 +48,13 @@ class _AboutSectionState extends State<AboutSection> {
         ),
         SizedBox(height: ResponsiveHelper.getProportionateSpacing(2.4)),
         ExpandableCard(
-          title: 'تحصیلات',
+          title: AppLocalizations.of(context).aboutEducationTitle,
           backgroundColor: AppTheme.greenCardBackground(context),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'دوران مدرک تحصیلی تموم شده الان باید ببینی چی بلدی و در چه مرحله ای هستی.',
+                AppLocalizations.of(context).aboutEducationP1,
                 style: TextStyle(
                   fontSize: ResponsiveHelper.getProportionateFontSize(1.6),
                   fontWeight: FontWeight.bold,
@@ -62,7 +63,7 @@ class _AboutSectionState extends State<AboutSection> {
               ),
               SizedBox(height: ResponsiveHelper.getProportionateSpacing(1.2)),
               Text(
-                'اما صرفا جهت ثبت کارشناسی الکترونیک دارم اما الان دارم کد نویسی میکنم و میخوام همین مسیر رو ادامه بدم',
+                AppLocalizations.of(context).aboutEducationP2,
                 style: TextStyle(
                   fontSize: ResponsiveHelper.getProportionateFontSize(1.6),
                   fontWeight: FontWeight.bold,
@@ -74,13 +75,13 @@ class _AboutSectionState extends State<AboutSection> {
         ),
         SizedBox(height: ResponsiveHelper.getProportionateSpacing(2.4)),
         ExpandableCard(
-          title: 'MITB test',
+          title: AppLocalizations.of(context).aboutMitbTitle,
           backgroundColor: AppTheme.greenCardBackground(context),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'وظیفه شناس، قاطع و منطقی، مفهوم گرا،تحلیل گر،فعال، پر انرژی، مطمئن،تشخیص منطقی نقاط ضعف و اشکالات، برنامه ریز،استدلال کننده،بیانگر،صریح،هدف گرا،منصف،حلال مسائل، منتقد',
+                AppLocalizations.of(context).aboutMitbP1,
                 style: TextStyle(
                   fontSize: ResponsiveHelper.getProportionateFontSize(1.6),
                   fontWeight: FontWeight.bold,

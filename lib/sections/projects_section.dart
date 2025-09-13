@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_unnecessary_containers
+// ignore_for_file: avoid_unnecessary_containers, avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +9,8 @@ import '../utils/responsive_helper.dart';
 import '../theme.dart';
 import '../providers/project_provider.dart';
 import '../models/project_model.dart';
+import '../providers/locale_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class ProjectsSection extends StatefulWidget {
@@ -19,25 +21,48 @@ class ProjectsSection extends StatefulWidget {
 }
 
 class _ProjectsSectionState extends State<ProjectsSection> {
+  String? _lastLanguageCode;
+  bool _hasLoaded = false;
+
   @override
   void initState() {
     super.initState();
     // بارگذاری پروژه‌ها هنگام شروع
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<ProjectProvider>().loadProjects();
+      _loadProjectsBasedOnLanguage();
     });
+  }
+
+  /// بارگذاری پروژه‌ها بر اساس زبان انتخابی
+  void _loadProjectsBasedOnLanguage() {
+    final languageCode = context.read<LocaleProvider>().locale.languageCode;
+    
+    // فقط اگر زبان تغییر کرده یا هنوز بارگذاری نشده، درخواست ارسال کن
+    if (!_hasLoaded || _lastLanguageCode != languageCode) {
+      _lastLanguageCode = languageCode;
+      _hasLoaded = true;
+      context.read<ProjectProvider>().loadProjectsForLanguage(languageCode);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ProjectProvider>(
-      builder: (context, projectProvider, child) {
-    return Container(
-      child: Column(
-        children: [
-          ExpandableCard(
-          title: 'پروژه‌ها',
-          initiallyExpanded: true,
+    return Consumer2<ProjectProvider, LocaleProvider>(
+      builder: (context, projectProvider, localeProvider, child) {
+        // بررسی تغییر زبان و بارگذاری مجدد در صورت نیاز
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          final currentLanguageCode = localeProvider.locale.languageCode;
+          if (_lastLanguageCode != currentLanguageCode) {
+            _loadProjectsBasedOnLanguage();
+          }
+        });
+
+        return Container(
+          child: Column(
+            children: [
+              ExpandableCard(
+                title: AppLocalizations.of(context).projects,
+                initiallyExpanded: true,
                 backgroundColor: AppTheme.projectCardBackground(context),
                 child: _buildProjectsContent(projectProvider),
               ),
@@ -75,7 +100,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
             ),
             SizedBox(height: ResponsiveHelper.getProportionateSpacing(1.6)),
             Text(
-              'در حال بارگذاری پروژه‌ها...',
+              AppLocalizations.of(context).loadingProjects,
               style: TextStyle(
                 color: AppTheme.textPrimary(context),
                 fontSize: ResponsiveHelper.getProportionateFontSize(1.4),
@@ -100,7 +125,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
             ),
             SizedBox(height: ResponsiveHelper.getProportionateSpacing(1.6)),
             Text(
-              projectProvider.error ?? 'خطا در بارگذاری پروژه‌ها',
+              projectProvider.error ?? AppLocalizations.of(context).projectLoadError,
               style: TextStyle(
                 color: AppTheme.textGrey(context),
                 fontSize: ResponsiveHelper.getProportionateFontSize(1.4),
@@ -108,9 +133,31 @@ class _ProjectsSectionState extends State<ProjectsSection> {
               textAlign: TextAlign.center,
             ),
             SizedBox(height: ResponsiveHelper.getProportionateSpacing(1.6)),
-            ElevatedButton(
-              onPressed: () => projectProvider.refreshProjects(),
-              child: const Text('تلاش مجدد'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () => projectProvider.refreshProjects(),
+                  child: Text(AppLocalizations.of(context).retry),
+                ),
+                SizedBox(width: ResponsiveHelper.getProportionateSpacing(1.6)),
+                ElevatedButton(
+                  onPressed: () async {
+                    final isConnected = await projectProvider.testDatabaseConnection();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          isConnected 
+                            ? 'اتصال به دیتابیس موفق است' 
+                            : 'خطا در اتصال به دیتابیس'
+                        ),
+                        backgroundColor: isConnected ? Colors.green : Colors.red,
+                      ),
+                    );
+                  },
+                  child: Text('تست اتصال'),
+                ),
+              ],
             ),
           ],
         ),
@@ -131,7 +178,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
             ),
             SizedBox(height: ResponsiveHelper.getProportionateSpacing(1.6)),
             Text(
-              'هیچ پروژه‌ای یافت نشد',
+              AppLocalizations.of(context).noProjectsFound,
               style: TextStyle(
                 color: AppTheme.textGrey(context),
                 fontSize: ResponsiveHelper.getProportionateFontSize(1.4),
@@ -156,9 +203,10 @@ class _ProjectsSectionState extends State<ProjectsSection> {
   }
 
   Widget _buildProjectItem(ProjectModel project) {
+    final languageCode = context.read<LocaleProvider>().locale.languageCode;
     return ProjectItem(
-      title: project.title,
-      description: project.description,
+      title: project.getTitleWithFallback(languageCode),
+      description: project.getDescriptionWithFallback(languageCode),
       image: project.imageUrl,
       technologies: project.technologies,
       links: _buildProjectLinks(project.links),
@@ -184,3 +232,5 @@ class _ProjectsSectionState extends State<ProjectsSection> {
     return callbacks;
   }
 }
+
+

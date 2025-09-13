@@ -49,6 +49,31 @@ class ProjectProvider extends ChangeNotifier {
     }
   }
 
+  /// بارگذاری پروژه‌ها برای زبان مشخص شده
+  Future<void> loadProjectsForLanguage(String languageCode) async {
+    _setLoading(true);
+    _clearError();
+
+    try {
+      _projects = await _projectService.getProjectsForLanguage(languageCode);
+      notifyListeners();
+    } catch (e) {
+      _setError('خطا در بارگذاری پروژه‌ها برای زبان $languageCode: $e');
+    } finally {
+      _setLoading(false);
+    }
+  }
+
+  /// تست اتصال به دیتابیس
+  Future<bool> testDatabaseConnection() async {
+    try {
+      return await _projectService.testConnection();
+    } catch (e) {
+      _setError('خطا در اتصال به دیتابیس: $e');
+      return false;
+    }
+  }
+
   /// بارگذاری مجدد پروژه‌ها
   Future<void> refreshProjects() async {
     await loadProjects();

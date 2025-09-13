@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'sections/about_section.dart';
 import 'sections/skills_section.dart';
@@ -10,6 +12,7 @@ import 'sections/experience_section.dart';
 import 'sections/projects_section.dart';
 import 'utils/responsive_helper.dart';
 import 'theme.dart';
+import 'providers/locale_provider.dart';
 
 class CustomResumePage extends StatefulWidget {
   final VoidCallback? onThemeToggle;
@@ -26,7 +29,23 @@ class CustomResumePage extends StatefulWidget {
 }
 
 class _CustomResumePageState extends State<CustomResumePage> {
-  String _selectedSection = 'درباره من'; // پیش‌فرض انتخاب شده
+  String _selectedSection = 'aboutMe'; // پیش‌فرض انتخاب شده
+
+  String _getLocalizedTitle(String key) {
+    final localizations = AppLocalizations.of(context);
+    switch (key) {
+      case 'aboutMe':
+        return localizations.aboutMe;
+      case 'skills':
+        return localizations.skills;
+      case 'experience':
+        return localizations.experience;
+      case 'projects':
+        return localizations.projects;
+      default:
+        return key;
+    }
+  }
 
 
   @override
@@ -34,8 +53,9 @@ class _CustomResumePageState extends State<CustomResumePage> {
     // مقداردهی اولیه ResponsiveHelper
     ResponsiveHelper.init(context);
     
+    final localeProvider = Provider.of<LocaleProvider>(context);
     return Directionality(
-      textDirection: TextDirection.rtl,
+      textDirection: localeProvider.locale.languageCode == 'fa' ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
         body: Container(
           color: Theme.of(context).colorScheme.surface,
@@ -116,10 +136,10 @@ class _CustomResumePageState extends State<CustomResumePage> {
   // آیتم‌های منوی موبایل
   List<Widget> _buildMobileMenuItems() {
     final menuItems = [
-      'درباره من',
-      'مهارت‌ها',
-      'سوابق',
-      'پروژه‌ها',
+      'aboutMe',
+      'skills',
+      'experience',
+      'projects',
     ];
 
     return menuItems.map((item) => _buildMobileMenuItem(item)).toList();
@@ -127,6 +147,7 @@ class _CustomResumePageState extends State<CustomResumePage> {
 
   Widget _buildMobileMenuItem(String title) {
     final isSelected = _selectedSection == title;
+    final localizedTitle = _getLocalizedTitle(title);
     
     return Container(
       margin: ResponsiveHelper.getProportionateMargin(horizontal: 1.0),
@@ -140,15 +161,15 @@ class _CustomResumePageState extends State<CustomResumePage> {
               ),
               decoration: BoxDecoration(
                 color: AppTheme.selectedContainer(context),
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(AppTheme.radiusPill),
-                  topRight: Radius.circular(AppTheme.radiusSmall),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(Directionality.of(context) == TextDirection.rtl ? AppTheme.radiusPill : AppTheme.radiusSmall),
+                  topRight: Radius.circular(Directionality.of(context) == TextDirection.rtl ? AppTheme.radiusSmall : AppTheme.radiusPill),
                   bottomLeft: Radius.circular(AppTheme.radiusPill),
                   bottomRight: Radius.circular(AppTheme.radiusSmall),
                 ),
               ),
               child: Text(
-                title,
+                localizedTitle,
                 style: TextStyle(
                   fontSize: ResponsiveHelper.getProportionateFontSize(1.6),
                   color: Theme.of(context).colorScheme.primary,
@@ -171,7 +192,7 @@ class _CustomResumePageState extends State<CustomResumePage> {
                   borderRadius: BorderRadius.circular(AppTheme.radiusSmall),
                 ),
                 child: Text(
-                  title,
+                  localizedTitle,
                   style: TextStyle(
                     fontSize: ResponsiveHelper.getProportionateFontSize(1.6),
                     color: Theme.of(context).colorScheme.onSurface.withOpacity(0.87),
@@ -197,11 +218,18 @@ class _CustomResumePageState extends State<CustomResumePage> {
           ResponsiveHelper.isMobile(context)
               ? _buildMobileHeader()
               : _buildDesktopHeader(),
-          // دکمه تغییر تم در گوشه بالا سمت چپ
+          // دکمه‌های تغییر تم و زبان - موقعیت پویا بر اساس جهت متن
           Positioned(
             top: 0,
-            left: 0,
-            child: _buildThemeToggleButton(),
+            left: Directionality.of(context) == TextDirection.rtl ? 0 : null,
+            right: Directionality.of(context) == TextDirection.rtl ? null : 0,
+            child: Row(
+              children: [
+                _buildThemeToggleButton(),
+                const SizedBox(width: 8),
+                _buildLanguageToggleButton(),
+              ],
+            ),
           ),
         ],
       ),
@@ -224,8 +252,32 @@ class _CustomResumePageState extends State<CustomResumePage> {
           shape: const CircleBorder(),
           padding: const EdgeInsets.all(8),
         ),
-        tooltip: widget.isDarkMode ? 'تغییر به تم روشن' : 'تغییر به تم تاریک',
+        tooltip: widget.isDarkMode ? AppLocalizations.of(context).lightTheme : AppLocalizations.of(context).darkTheme,
       ),
+    );
+  }
+
+  Widget _buildLanguageToggleButton() {
+    return Consumer<LocaleProvider>(
+      builder: (context, localeProvider, child) {
+        return Container(
+          margin: const EdgeInsets.all(8),
+          child: IconButton(
+            onPressed: () => localeProvider.toggleLocale(),
+            icon: Icon(
+              localeProvider.locale.languageCode == 'fa' ? Icons.language : Icons.translate,
+              color: Theme.of(context).colorScheme.onSurface,
+              size: 24,
+            ),
+            style: IconButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.surface.withOpacity(0.8),
+              shape: const CircleBorder(),
+              padding: const EdgeInsets.all(8),
+            ),
+            tooltip: AppLocalizations.of(context).changeLanguage,
+          ),
+        );
+      },
     );
   }
 
@@ -249,7 +301,7 @@ class _CustomResumePageState extends State<CustomResumePage> {
         SizedBox(height: ResponsiveHelper.getProportionateSpacing(1.5)),
         // نام
         Text(
-          'هامان درویش',
+          AppLocalizations.of(context).personName,
           style: TextStyle(
             fontSize: ResponsiveHelper.getProportionateFontSize(2.0),
             fontWeight: FontWeight.bold,
@@ -263,7 +315,7 @@ class _CustomResumePageState extends State<CustomResumePage> {
           children: [
             _ConnectButton(
               icon: FontAwesomeIcons.github,
-              label: 'اتصال به گیت‌هاب',
+              label: AppLocalizations.of(context).connectGithub,
               color: AppTheme.githubForDarkTheme(context),
               onPressed: () async {
                 final url = Uri.parse('https://github.com/haman13');
@@ -279,7 +331,7 @@ class _CustomResumePageState extends State<CustomResumePage> {
             SizedBox(width: ResponsiveHelper.getProportionateSpacing(1.5)),
             _ConnectButton(
               icon: FontAwesomeIcons.linkedin,
-              label: 'اتصال به لینکدین',
+              label: AppLocalizations.of(context).connectLinkedin,
               color: AppTheme.linkedIn,
               onPressed: () async {
                 final url = Uri.parse('https://www.linkedin.com/in/haman-darvish-6a489a25a/');
@@ -319,7 +371,7 @@ class _CustomResumePageState extends State<CustomResumePage> {
             ),
             SizedBox(height: ResponsiveHelper.getProportionateSpacing(1.0)),
             Text(
-              'هامان درویش',
+              AppLocalizations.of(context).personName,
               style: TextStyle(
                 fontSize: ResponsiveHelper.getProportionateFontSize(2.0),
                 fontWeight: FontWeight.bold,
@@ -335,7 +387,7 @@ class _CustomResumePageState extends State<CustomResumePage> {
             children: [
               _ConnectButton(
                 icon: FontAwesomeIcons.github,
-                label: 'اتصال به گیت‌هاب',
+                label: AppLocalizations.of(context).connectGithub,
                 color: AppTheme.githubForDarkTheme(context),
                 onPressed: () async {
                   final url = Uri.parse('https://github.com/haman13');
@@ -351,7 +403,7 @@ class _CustomResumePageState extends State<CustomResumePage> {
               SizedBox(width: ResponsiveHelper.getProportionateSpacing(1.6)),
               _ConnectButton(
                 icon: FontAwesomeIcons.linkedin,
-                label: 'اتصال به لینکدین',
+                label: AppLocalizations.of(context).connectLinkedin,
                 color: AppTheme.linkedIn,
                 onPressed: () async {
                   final url = Uri.parse('https://www.linkedin.com/in/haman-darvish-6a489a25a/');
@@ -373,10 +425,10 @@ class _CustomResumePageState extends State<CustomResumePage> {
 
   Widget _buildSideMenu() {
     final menuItems = [
-      'درباره من',
-      'مهارت‌ها',
-      'سوابق',
-      'پروژه‌ها',
+      'aboutMe',
+      'skills',
+      'experience',
+      'projects',
     ];
 
     return Column(
@@ -387,6 +439,7 @@ class _CustomResumePageState extends State<CustomResumePage> {
 
   Widget _buildMenuItem(String title) {
     final isSelected = _selectedSection == title;
+    final localizedTitle = _getLocalizedTitle(title);
     
     return Padding(
       padding: ResponsiveHelper.getProportionatePadding(
@@ -403,15 +456,15 @@ class _CustomResumePageState extends State<CustomResumePage> {
               ),
               decoration: BoxDecoration(
                 color: AppTheme.selectedContainer(context),
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(200),      // گوشه بالا چپ - نصف اندازه
-                  topRight: Radius.circular(8),     // گوشه بالا راست - همان اندازه
-                  bottomLeft: Radius.circular(8),   // گوشه پایین چپ - نصف اندازه
-                  bottomRight: Radius.circular(8),  // گوشه پایین راست - همان اندازه
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(Directionality.of(context) == TextDirection.rtl ? 200 : 8),
+                  topRight: Radius.circular(Directionality.of(context) == TextDirection.rtl ? 8 : 200),
+                  bottomLeft: Radius.circular(8),
+                  bottomRight: Radius.circular(8),
                 ),
               ),
               child: Text(
-                title,
+                localizedTitle,
                 style: TextStyle(
                   fontSize: ResponsiveHelper.getProportionateFontSize(1.6),
                   color: AppTheme.textSelected(context),
@@ -434,7 +487,7 @@ class _CustomResumePageState extends State<CustomResumePage> {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
-                  title,
+                  localizedTitle,
                   style: TextStyle(
                     fontSize: ResponsiveHelper.getProportionateFontSize(1.6),
                     color: AppTheme.textSecondaryOpacity(context),
@@ -455,13 +508,13 @@ class _CustomResumePageState extends State<CustomResumePage> {
 
   Widget _buildMainContent() {
     switch (_selectedSection) {
-      case 'درباره من':
+      case 'aboutMe':
         return const AboutSection();
-      case 'مهارت‌ها':
+      case 'skills':
         return const SkillsSection();
-      case 'سوابق':
+      case 'experience':
         return const ExperienceSection();
-      case 'پروژه‌ها':
+      case 'projects':
         return const ProjectsSection();
       default:
         return const SizedBox.shrink();

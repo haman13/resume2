@@ -3,6 +3,8 @@ class ProjectModel {
   final String id;
   final String title;
   final String description;
+  final String? titleEn;
+  final String? descriptionEn;
   final String imageUrl;
   final List<String> technologies;
   final Map<String, String> links;
@@ -14,6 +16,8 @@ class ProjectModel {
     required this.id,
     required this.title,
     required this.description,
+    this.titleEn,
+    this.descriptionEn,
     required this.imageUrl,
     required this.technologies,
     required this.links,
@@ -28,6 +32,8 @@ class ProjectModel {
       id: json['id'] as String,
       title: json['title'] as String,
       description: json['description'] as String,
+      titleEn: json['title_en'] as String?,
+      descriptionEn: json['description_en'] as String?,
       imageUrl: json['image_url'] as String,
       technologies: List<String>.from(json['technologies'] as List),
       links: Map<String, String>.from(json['links'] as Map<String, dynamic>),
@@ -43,6 +49,8 @@ class ProjectModel {
       'id': id,
       'title': title,
       'description': description,
+      'title_en': titleEn,
+      'description_en': descriptionEn,
       'image_url': imageUrl,
       'technologies': technologies,
       'links': links,
@@ -57,6 +65,8 @@ class ProjectModel {
     String? id,
     String? title,
     String? description,
+    String? titleEn,
+    String? descriptionEn,
     String? imageUrl,
     List<String>? technologies,
     Map<String, String>? links,
@@ -68,6 +78,8 @@ class ProjectModel {
       id: id ?? this.id,
       title: title ?? this.title,
       description: description ?? this.description,
+      titleEn: titleEn ?? this.titleEn,
+      descriptionEn: descriptionEn ?? this.descriptionEn,
       imageUrl: imageUrl ?? this.imageUrl,
       technologies: technologies ?? this.technologies,
       links: links ?? this.links,
@@ -75,6 +87,46 @@ class ProjectModel {
       updatedAt: updatedAt ?? this.updatedAt,
       isActive: isActive ?? this.isActive,
     );
+  }
+
+  /// برگرداندن عنوان بر اساس زبان (fa/en)
+  String localizedTitle(String languageCode) {
+    if (languageCode == 'en' && (titleEn?.isNotEmpty ?? false)) {
+      return titleEn!;
+    }
+    return title;
+  }
+
+  /// برگرداندن توضیح بر اساس زبان (fa/en)
+  String localizedDescription(String languageCode) {
+    if (languageCode == 'en' && (descriptionEn?.isNotEmpty ?? false)) {
+      return descriptionEn!;
+    }
+    return description;
+  }
+
+  /// بررسی اینکه آیا پروژه برای زبان مشخص شده محتوا دارد یا نه
+  bool hasContentForLanguage(String languageCode) {
+    if (languageCode == 'en') {
+      return (titleEn?.isNotEmpty ?? false) && (descriptionEn?.isNotEmpty ?? false);
+    }
+    return title.isNotEmpty && description.isNotEmpty;
+  }
+
+  /// دریافت عنوان با fallback (اگر ترجمه موجود نباشد، زبان اصلی را برگردان)
+  String getTitleWithFallback(String languageCode) {
+    if (languageCode == 'en' && (titleEn?.isNotEmpty ?? false)) {
+      return titleEn!;
+    }
+    return title;
+  }
+
+  /// دریافت توضیح با fallback (اگر ترجمه موجود نباشد، زبان اصلی را برگردان)
+  String getDescriptionWithFallback(String languageCode) {
+    if (languageCode == 'en' && (descriptionEn?.isNotEmpty ?? false)) {
+      return descriptionEn!;
+    }
+    return description;
   }
 
   @override

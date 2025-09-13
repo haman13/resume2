@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../widgets/expandable_card.dart';
 import '../utils/responsive_helper.dart';
 import '../theme.dart';
@@ -9,11 +10,11 @@ class SkillsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final skills = {
-      'مهارت‌های اصلی': [
+      AppLocalizations.of(context).skillsCoreTitle: [
         'Flutter', 'Dart', 'Git',
         'REST API', 'Supabase',
       ],
-      'فریم‌ورک‌ها و کتابخانه‌ها': [
+      AppLocalizations.of(context).skillsFrameworksTitle: [
         'GetX', 'Provider', 'Bloc',
         'Dio', 'Hive',
       ],

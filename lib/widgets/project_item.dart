@@ -110,58 +110,102 @@ class ProjectItem extends StatelessWidget {
   }
 
   Widget _buildProjectImage() {
-    return Image.asset(
-      image,
-      fit: BoxFit.cover,
-      errorBuilder: (context, error, stackTrace) {
-        return Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                AppTheme.projectCardBackground(context),
-                AppTheme.projectCardBackground(context).withOpacity(0.7),
-              ],
+    // بررسی اینکه آیا image یک URL است یا مسیر فایل محلی
+    final isNetworkImage = image.startsWith('http://') || image.startsWith('https://');
+    
+    if (isNetworkImage) {
+      return Image.network(
+        image,
+        fit: BoxFit.cover,
+        loadingBuilder: (context, child, loadingProgress) {
+          if (loadingProgress == null) return child;
+          return Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  AppTheme.projectCardBackground(context),
+                  AppTheme.projectCardBackground(context).withOpacity(0.7),
+                ],
+              ),
             ),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: AppTheme.textGrey(context).withOpacity(0.1),
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  Icons.work_outline,
-                  size: 32,
-                  color: AppTheme.textGrey(context),
-                ),
+            child: Center(
+              child: CircularProgressIndicator(
+                value: loadingProgress.expectedTotalBytes != null
+                    ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                    : null,
+                color: AppTheme.textPrimary(context),
               ),
-              const SizedBox(height: 12),
-              Text(
-                'پروژه',
-                style: TextStyle(
-                  color: AppTheme.textGrey(context),
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                'تصویر در دسترس نیست',
-                style: TextStyle(
-                  color: AppTheme.textGrey(context).withOpacity(0.7),
-                  fontSize: 10,
-                ),
-                textAlign: TextAlign.center,
-              ),
+            ),
+          );
+        },
+        errorBuilder: (context, error, stackTrace) {
+          print('خطا در بارگذاری تصویر: $error');
+          print('URL: $image');
+          return _buildErrorImage();
+        },
+      );
+    } else {
+      return Image.asset(
+        image,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) {
+          return _buildErrorImage();
+        },
+      );
+    }
+  }
+
+  Widget _buildErrorImage() {
+    return Builder(
+      builder: (context) => Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              AppTheme.projectCardBackground(context),
+              AppTheme.projectCardBackground(context).withOpacity(0.7),
             ],
           ),
-        );
-      },
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: AppTheme.textGrey(context).withOpacity(0.1),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                Icons.work_outline,
+                size: 32,
+                color: AppTheme.textGrey(context),
+              ),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              'پروژه',
+              style: TextStyle(
+                color: AppTheme.textGrey(context),
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              'تصویر در دسترس نیست',
+              style: TextStyle(
+                color: AppTheme.textGrey(context).withOpacity(0.7),
+                fontSize: 10,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

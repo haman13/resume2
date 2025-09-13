@@ -26,7 +26,19 @@ class SupabaseService {
     try {
       final response = await _supabase
           .from('projects')
-          .select()
+          .select('''
+            id,
+            title,
+            description,
+            title_en,
+            description_en,
+            image_url,
+            technologies,
+            links,
+            created_at,
+            updated_at,
+            is_active
+          ''')
           .eq('is_active', true)
           .order('created_at', ascending: false);
 
@@ -34,6 +46,7 @@ class SupabaseService {
           .map((json) => ProjectModel.fromJson(json as Map<String, dynamic>))
           .toList();
     } catch (e) {
+      print('خطا در دریافت پروژه‌ها: $e');
       return [];
     }
   }
@@ -43,12 +56,25 @@ class SupabaseService {
     try {
       final response = await _supabase
           .from('projects')
-          .select()
+          .select('''
+            id,
+            title,
+            description,
+            title_en,
+            description_en,
+            image_url,
+            technologies,
+            links,
+            created_at,
+            updated_at,
+            is_active
+          ''')
           .eq('id', id)
           .single();
 
       return ProjectModel.fromJson(response as Map<String, dynamic>);
     } catch (e) {
+      print('خطا در دریافت پروژه با ID $id: $e');
       return null;
     }
   }
@@ -59,11 +85,24 @@ class SupabaseService {
       final response = await _supabase
           .from('projects')
           .insert(project.toJson())
-          .select()
+          .select('''
+            id,
+            title,
+            description,
+            title_en,
+            description_en,
+            image_url,
+            technologies,
+            links,
+            created_at,
+            updated_at,
+            is_active
+          ''')
           .single();
 
       return ProjectModel.fromJson(response as Map<String, dynamic>);
     } catch (e) {
+      print('خطا در اضافه کردن پروژه: $e');
       return null;
     }
   }
@@ -75,11 +114,24 @@ class SupabaseService {
           .from('projects')
           .update(project.toJson())
           .eq('id', project.id)
-          .select()
+          .select('''
+            id,
+            title,
+            description,
+            title_en,
+            description_en,
+            image_url,
+            technologies,
+            links,
+            created_at,
+            updated_at,
+            is_active
+          ''')
           .single();
 
       return ProjectModel.fromJson(response as Map<String, dynamic>);
     } catch (e) {
+      print('خطا در به‌روزرسانی پروژه: $e');
       return null;
     }
   }
@@ -124,7 +176,41 @@ class SupabaseService {
       
       return projects;
     } catch (e) {
+      print('خطا در فیلتر کردن پروژه‌ها: $e');
       return [];
+    }
+  }
+
+  /// دریافت پروژه‌هایی که برای زبان مشخص شده محتوا دارند
+  Future<List<ProjectModel>> getProjectsForLanguage(String languageCode) async {
+    try {
+      final projects = await getActiveProjects();
+      
+      if (languageCode == 'en') {
+        // فقط پروژه‌هایی که ترجمه انگلیسی دارند
+        return projects.where((project) => 
+          project.hasContentForLanguage('en')).toList();
+      } else {
+        // همه پروژه‌ها (زبان فارسی)
+        return projects;
+      }
+    } catch (e) {
+      print('خطا در دریافت پروژه‌ها برای زبان $languageCode: $e');
+      return [];
+    }
+  }
+
+  /// بررسی اتصال به دیتابیس
+  Future<bool> testConnection() async {
+    try {
+      await _supabase
+          .from('projects')
+          .select('id')
+          .limit(1);
+      return true;
+    } catch (e) {
+      print('خطا در اتصال به دیتابیس: $e');
+      return false;
     }
   }
 }

@@ -1,10 +1,14 @@
-# رزومه حرفه‌ای - هامان
+# 🚀 رزومه آنلاین هامان درویش
 
 یک رزومه تعاملی و responsive که با Flutter ساخته شده و از Supabase برای مدیریت داده‌ها استفاده می‌کند.
 
+[![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)](https://flutter.dev/)
+[![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com/)
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-222222?style=for-the-badge&logo=github&logoColor=white)](https://pages.github.com/)
+
 ## 🌐 مشاهده آنلاین
 
-[**مشاهده رزومه آنلاین**](https://haman13.github.io/resume/)
+[**🔗 مشاهده رزومه آنلاین**](https://haman13.github.io/resume/)
 
 ## ✨ ویژگی‌ها
 
@@ -15,14 +19,17 @@
 - ⚡ **Fast Loading** - بهینه‌سازی شده برای سرعت
 - 📱 **PWA** - قابلیت نصب روی موبایل
 - 🔍 **SEO Optimized** - بهینه‌سازی شده برای موتورهای جستجو
+- 🌍 **Multi-language** - پشتیبانی از فارسی و انگلیسی
+- 📊 **Real-time Data** - داده‌های زنده از دیتابیس
 
 ## 🛠️ تکنولوژی‌های استفاده شده
 
 - **Frontend**: Flutter Web
-- **Backend**: Supabase
+- **Backend**: Supabase (PostgreSQL)
 - **State Management**: Provider
-- **Icons**: Font Awesome
+- **Icons**: Material Icons
 - **Deployment**: GitHub Pages
+- **CI/CD**: GitHub Actions
 
 ## 🚀 اجرای محلی
 
@@ -71,68 +78,17 @@ lib/
     └── responsive_helper.dart         # کمک‌رسان responsive
 ```
 
-## 🔧 تنظیمات
+#
 
-### اتصال به Supabase
-1. فایل `lib/services/supabase_service.dart` را باز کنید
-2. URL و کلید Supabase خود را وارد کنید:
-```dart
-await Supabase.initialize(
-  url: 'YOUR_SUPABASE_URL',
-  anonKey: 'YOUR_SUPABASE_ANON_KEY',
-);
-```
 
-### ساختار دیتابیس
-جدول `projects` در Supabase:
-```sql
-CREATE TABLE projects (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  title TEXT NOT NULL,
-  description TEXT NOT NULL,
-  image_url TEXT NOT NULL,
-  technologies TEXT[] NOT NULL,
-  links JSONB NOT NULL DEFAULT '{}',
-  is_active BOOLEAN DEFAULT true,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
-```
 
-## 📱 انتشار
-
-### GitHub Pages
-```bash
-# Build کردن برای وب
-flutter build web --release
-
-# کپی کردن فایل‌ها به docs
-cp -r build/web/* docs/
-
-# Commit و Push
-git add docs/
-git commit -m "Deploy to GitHub Pages"
-git push origin main
-```
 
 ### سایر پلتفرم‌ها
 - **Netlify**: Drag & drop پوشه `build/web`
 - **Vercel**: `npx vercel --prod`
 - **Firebase**: `firebase deploy`
 
-## 🎨 سفارشی‌سازی
 
-### تغییر رنگ‌ها
-فایل `lib/theme.dart` را ویرایش کنید:
-```dart
-static const Color primary = Color(0xFF2196F3);
-static const Color secondary = Color(0xFF03DAC6);
-```
-
-### اضافه کردن بخش جدید
-1. فایل جدید در `lib/sections/` ایجاد کنید
-2. در `custom_resume_page.dart` اضافه کنید
-3. منو را به‌روزرسانی کنید
 
 ## 📊 Performance
 
@@ -143,12 +99,6 @@ static const Color secondary = Color(0xFF03DAC6);
 
 ## 🤝 مشارکت
 
-1. Fork کنید
-2. Branch جدید ایجاد کنید (`git checkout -b feature/amazing-feature`)
-3. تغییرات را commit کنید (`git commit -m 'Add amazing feature'`)
-4. Push کنید (`git push origin feature/amazing-feature`)
-5. Pull Request ایجاد کنید
-
 ## 📄 لایسنس
 
 این پروژه تحت لایسنس MIT منتشر شده است. برای جزئیات بیشتر فایل `LICENSE` را مطالعه کنید.
@@ -156,9 +106,13 @@ static const Color secondary = Color(0xFF03DAC6);
 ## 📞 تماس
 
 - **GitHub**: [@haman13](https://github.com/haman13)
-- **Email**: your-email@example.com
-- **LinkedIn**: [Your LinkedIn Profile](https://linkedin.com/in/your-profile)
+- **Email**: hamancodes@example.com
+- **LinkedIn**: https://www.linkedin.com/in/haman-darvish-6a489a25a/
 
 ---
 
 ⭐ اگر این پروژه برایتان مفید بود، یک ستاره بدهید!
+
+
+
+روی قسمت پروژه ها و انگلیسی بودنشون کار میکینم.دیتابیس کلا پاک کردم دوباره از اول بنویسیم

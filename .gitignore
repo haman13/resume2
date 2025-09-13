@@ -50,6 +50,7 @@ app.*.map.json
 .env
 .env.local
 .env.production
+.env.development
 
 # IDE
 .vscode/
@@ -58,3 +59,44 @@ app.*.map.json
 # OS
 .DS_Store
 Thumbs.db
+
+# GitHub Pages
+/docs/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Logs
+*.log
+logs/
+
+# Coverage
+coverage/
+
+# Test results
+test-results/
+
+# Build artifacts
+build/
+dist/
+
+# Dependencies
+node_modules/
+
+# IDE specific
+*.swp
+*.swo
+*~
+
+# Flutter specific
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+
+# Supabase
+.supabase/

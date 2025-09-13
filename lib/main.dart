@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'custom_resume_page.dart';
 import 'theme.dart';
 import 'providers/project_provider.dart';
+import 'providers/locale_provider.dart';
 import 'services/supabase_service.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,18 +42,39 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => ProjectProvider(),
-      child: MaterialApp(
-        title: 'رزومه من',
-        theme: AppTheme.light,
-        darkTheme: AppTheme.dark,
-        themeMode: _isDarkMode ? ThemeMode.dark : ThemeMode.light,
-        home: CustomResumePage(
-          onThemeToggle: _toggleTheme,
-          isDarkMode: _isDarkMode,
-        ),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => ProjectProvider()),
+        ChangeNotifierProvider(create: (context) => LocaleProvider()),
+      ],
+      child: Consumer<LocaleProvider>(
+        builder: (context, localeProvider, child) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            locale: localeProvider.locale,
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: const [
+              Locale('en'),
+              Locale('fa'),
+            ],
+            onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
+            theme: AppTheme.light,
+            darkTheme: AppTheme.dark,
+            themeMode: _isDarkMode ? ThemeMode.dark : ThemeMode.light,
+            home: CustomResumePage(
+              onThemeToggle: _toggleTheme,
+              isDarkMode: _isDarkMode,
+            ),
+          );
+        },
       ),
     );
   }
 }
+
+
