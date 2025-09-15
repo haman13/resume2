@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_final_fields, unused_field
+// ignore_for_file: prefer_final_fields, unused_field, prefer_const_constructors
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -208,10 +208,15 @@ class _CustomResumePageState extends State<CustomResumePage> {
   Widget _buildHeader() {
     return Container(
       color: AppTheme.headerBackground(context),
-      padding: ResponsiveHelper.getProportionatePadding(
-        horizontal: 2.4,
-        vertical: 2.4,
-      ),
+      height: ResponsiveHelper.isDesktop(context)
+          ? ResponsiveHelper.getProportionateScreenHeight(15.0)
+          : null,
+      padding: ResponsiveHelper.isDesktop(context)
+          ? const EdgeInsets.only(top: 10,right: 25,left: 10,bottom: 0)
+          : ResponsiveHelper.getProportionatePadding(
+              horizontal: 2.4,
+              vertical: 2.4,
+            ),
       child: Stack(
         children: [
           // محتوای اصلی هدر
@@ -239,7 +244,7 @@ class _CustomResumePageState extends State<CustomResumePage> {
   // دکمه تغییر تم
   Widget _buildThemeToggleButton() {
     return Container(
-      margin: const EdgeInsets.all(8),
+      margin: ResponsiveHelper.isDesktop(context) ? EdgeInsets.zero : const EdgeInsets.all(8),
       child: IconButton(
         onPressed: widget.onThemeToggle,
         icon: Icon(
@@ -250,7 +255,7 @@ class _CustomResumePageState extends State<CustomResumePage> {
         style: IconButton.styleFrom(
           backgroundColor: Theme.of(context).colorScheme.surface.withOpacity(0.8),
           shape: const CircleBorder(),
-          padding: const EdgeInsets.all(8),
+          padding: ResponsiveHelper.isDesktop(context) ? EdgeInsets.zero : const EdgeInsets.all(8),
         ),
         tooltip: widget.isDarkMode ? AppLocalizations.of(context).lightTheme : AppLocalizations.of(context).darkTheme,
       ),
@@ -261,7 +266,7 @@ class _CustomResumePageState extends State<CustomResumePage> {
     return Consumer<LocaleProvider>(
       builder: (context, localeProvider, child) {
         return Container(
-          margin: const EdgeInsets.all(8),
+          margin: ResponsiveHelper.isDesktop(context) ? EdgeInsets.zero : const EdgeInsets.all(8),
           child: IconButton(
             onPressed: () => localeProvider.toggleLocale(),
             icon: Icon(
@@ -272,7 +277,7 @@ class _CustomResumePageState extends State<CustomResumePage> {
             style: IconButton.styleFrom(
               backgroundColor: Theme.of(context).colorScheme.surface.withOpacity(0.8),
               shape: const CircleBorder(),
-              padding: const EdgeInsets.all(8),
+              padding: ResponsiveHelper.isDesktop(context) ? EdgeInsets.zero : const EdgeInsets.all(8),
             ),
             tooltip: AppLocalizations.of(context).changeLanguage,
           ),
@@ -369,11 +374,11 @@ class _CustomResumePageState extends State<CustomResumePage> {
                 ),
               ),
             ),
-            SizedBox(height: ResponsiveHelper.getProportionateSpacing(1.0)),
+            SizedBox(height: 0),
             Text(
               AppLocalizations.of(context).personName,
               style: TextStyle(
-                fontSize: ResponsiveHelper.getProportionateFontSize(2.0),
+                fontSize: ResponsiveHelper.getProportionateFontSize(1.0),
                 fontWeight: FontWeight.bold,
                 color: Theme.of(context).colorScheme.onSurface,
               ),
@@ -400,7 +405,7 @@ class _CustomResumePageState extends State<CustomResumePage> {
                   }
                 },
               ),
-              SizedBox(width: ResponsiveHelper.getProportionateSpacing(1.6)),
+              SizedBox(width: 0),
               _ConnectButton(
                 icon: FontAwesomeIcons.linkedin,
                 label: AppLocalizations.of(context).connectLinkedin,
@@ -537,6 +542,21 @@ class _ConnectButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool _isDesktop = ResponsiveHelper.isDesktop(context);
+
+    // محاسبه حداقل ارتفاع برای جلوگیری از خیلی کوچک شدن دکمه در دسکتاپ
+    final double _fontSize = _isDesktop
+        ? ResponsiveHelper.getProportionateFontSize(1.0)
+        : ResponsiveHelper.getProportionateFontSize(1.6);
+    final double _iconSize = _isDesktop
+        ? ResponsiveHelper.getProportionateFontSize(1.2)
+        : ResponsiveHelper.getProportionateFontSize(2.0);
+    final double _verticalPad = _isDesktop
+        ? ResponsiveHelper.getProportionateSpacing(0.6)
+        : ResponsiveHelper.getProportionateSpacing(1.2);
+    final double _estimatedHeight = (_verticalPad * 2) + (_fontSize > _iconSize ? _fontSize : _iconSize);
+    final double _minHeight = _isDesktop ? _estimatedHeight * 0.5 : 0.0;
+
     return Material(
       color: color.withOpacity(0.1),
       borderRadius: BorderRadius.circular(30),
@@ -544,26 +564,40 @@ class _ConnectButton extends StatelessWidget {
         onTap: onPressed,
         borderRadius: BorderRadius.circular(30),
         child: Container(
-          padding: ResponsiveHelper.getProportionatePadding(
-            horizontal: 2.4,
-            vertical: 1.2,
-          ),
+          constraints: _isDesktop ? BoxConstraints(minHeight: _minHeight) : null,
+          padding: ResponsiveHelper.isDesktop(context)
+              ? ResponsiveHelper.getProportionatePadding(
+                  horizontal: 1.2,
+                  vertical: 0.6,
+                )
+              : ResponsiveHelper.getProportionatePadding(
+                  horizontal: 2.4,
+                  vertical: 1.2,
+                ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
                 label,
                 style: TextStyle(
-                  fontSize: ResponsiveHelper.getProportionateFontSize(1.4),
+                  fontSize: ResponsiveHelper.isDesktop(context)
+                      ? ResponsiveHelper.getProportionateFontSize(1.0)
+                      : ResponsiveHelper.getProportionateFontSize(1.6),
                   color: color,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(width: ResponsiveHelper.getProportionateSpacing(1.2)),
+              SizedBox(
+                width: ResponsiveHelper.isDesktop(context)
+                    ? ResponsiveHelper.getProportionateSpacing(1.0)
+                    : ResponsiveHelper.getProportionateSpacing(1.6),
+              ),
               Icon(
                 icon, 
                 color: color,
-                size: ResponsiveHelper.getProportionateFontSize(1.6),
+                size: ResponsiveHelper.isDesktop(context)
+                    ? ResponsiveHelper.getProportionateFontSize(1.2)
+                    : ResponsiveHelper.getProportionateFontSize(2.0),
               ),
             ],
           ),

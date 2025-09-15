@@ -1,6 +1,8 @@
 // فایل تست برای بررسی اتصال به دیتابیس
 // این فایل را در main.dart import کنید و در initState فراخوانی کنید
 
+// ignore_for_file: avoid_print, prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'services/supabase_service.dart';
 import 'models/project_model.dart';

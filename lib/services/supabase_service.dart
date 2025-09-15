@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_cast
+// ignore_for_file: unnecessary_cast, avoid_print
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../models/project_model.dart';

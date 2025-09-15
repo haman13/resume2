@@ -65,20 +65,20 @@ class ResponsiveHelper {
   static int getMainContentFlex() {
     if (screenWidth < 600) return 4; // موبایل
     if (screenWidth < 900) return 3; // تبلت
-    return 7; // دسکتاپ
+    return 5; // دسکتاپ
   }
   
   // محاسبه اندازه عکس پروفایل
   static double getProfileImageSize() {
     if (screenWidth < 600) return screenWidth * 0.25; // 25% of screen width
     if (screenWidth < 900) return screenWidth * 0.15; // 15% of screen width
-    return 120; // ثابت برای دسکتاپ
+    return getProportionateScreenHeight(15.0) * 0.7; // دسکتاپ: 70% از ارتفاع هدر (15% صفحه)
   }
   
   // محاسبه padding های نسبی
   static EdgeInsets getProportionatePadding({
-    double horizontal = 2.0,
-    double vertical = 2.0,
+    double horizontal = 0.0,
+    double vertical = 0.0,
   }) {
     return EdgeInsets.symmetric(
       horizontal: getProportionateSpacing(horizontal),
