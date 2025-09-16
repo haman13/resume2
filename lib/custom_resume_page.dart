@@ -510,7 +510,7 @@ class _CustomResumePageState extends State<CustomResumePage> {
                 child: Text(
                   localizedTitle,
                   style: TextStyle(
-                    fontSize: ResponsiveHelper.getProportionateFontSize(1.6),
+                    fontSize: ResponsiveHelper.getProportionateFontSize(1.2),
                     color: AppTheme.textSecondaryOpacity(context),
                     fontWeight: FontWeight.normal,
                   ),
