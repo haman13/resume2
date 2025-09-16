@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:resume/utils/responsive_helper.dart';
 import '../theme.dart';
 
 class ExperienceItem extends StatelessWidget {
@@ -32,7 +33,7 @@ class ExperienceItem extends StatelessWidget {
                   Text(
                     role,
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: ResponsiveHelper.getProportionateFontSize(1.2),
                       fontWeight: FontWeight.bold,
                       color: AppTheme.textPrimary(context),
                     ),
@@ -41,7 +42,7 @@ class ExperienceItem extends StatelessWidget {
                   Text(
                     company,
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: ResponsiveHelper.getProportionateFontSize(1.2),
                       color: AppTheme.textGrey(context),
                     ),
                   ),
@@ -52,7 +53,7 @@ class ExperienceItem extends StatelessWidget {
               duration,
               style: TextStyle(
                 color: AppTheme.textGrey(context),
-                fontSize: 14,
+                fontSize: ResponsiveHelper.getProportionateFontSize(1.2),
               ),
             ),
           ],
@@ -62,7 +63,7 @@ class ExperienceItem extends StatelessWidget {
           description,
           style: TextStyle(
             color: AppTheme.textPrimary(context),
-            fontSize: 14,
+            fontSize: ResponsiveHelper.getProportionateFontSize(1.2),
           ),
         ),
         if (achievements.isNotEmpty) ...[

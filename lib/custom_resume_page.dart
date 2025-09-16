@@ -528,18 +528,46 @@ class _CustomResumePageState extends State<CustomResumePage> {
   }
 
   Widget _buildMainContent() {
+    Widget content;
     switch (_selectedSection) {
       case 'aboutMe':
-        return const AboutSection();
+        content = const AboutSection();
+        break;
       case 'skills':
-        return const SkillsSection();
+        content = const SkillsSection();
+        break;
       case 'experience':
-        return const ExperienceSection();
+        content = const ExperienceSection();
+        break;
       case 'projects':
-        return const ProjectsSection();
+        content = const ProjectsSection();
+        break;
       default:
-        return const SizedBox.shrink();
+        content = const SizedBox.shrink();
     }
+
+    return AnimatedSwitcher(
+      duration: AppTheme.normal,
+      switchInCurve: Curves.easeOut,
+      switchOutCurve: Curves.easeIn,
+      transitionBuilder: (child, animation) {
+        final offsetAnimation = Tween<Offset>(
+          begin: const Offset(0.03, 0),
+          end: Offset.zero,
+        ).animate(animation);
+        return FadeTransition(
+          opacity: animation,
+          child: SlideTransition(
+            position: offsetAnimation,
+            child: child,
+          ),
+        );
+      },
+      child: KeyedSubtree(
+        key: ValueKey(_selectedSection),
+        child: content,
+      ),
+    );
   }
 }
 

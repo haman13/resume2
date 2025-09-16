@@ -53,7 +53,7 @@ class _ExpandableCardState extends State<ExpandableCard> {
                     child: Text(
                       widget.title,
                       style: TextStyle(
-                        fontSize: ResponsiveHelper.getProportionateFontSize(2.5),
+                        fontSize: ResponsiveHelper.getProportionateFontSize(1.5),
                         fontWeight: FontWeight.bold,
                         color: AppTheme.textPrimary(context),
                       ),
@@ -70,12 +70,18 @@ class _ExpandableCardState extends State<ExpandableCard> {
               ),
             ),
           ),
-          // نمایش ساده محتوا بدون انیمیشن
-          if (_isExpanded)
-            Padding(
+          // نمایش محتوا با انیمیشن نرم
+          AnimatedCrossFade(
+            duration: AppTheme.normal,
+            crossFadeState: _isExpanded
+                ? CrossFadeState.showSecond
+                : CrossFadeState.showFirst,
+            firstChild: const SizedBox.shrink(),
+            secondChild: Padding(
               padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
               child: widget.child,
             ),
+          ),
         ],
       ),
     );

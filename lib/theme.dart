@@ -222,7 +222,7 @@ class AppTheme {
           brightness: Brightness.light,
         ).copyWith(
           // سفارشی‌سازی رنگ‌ها برای ظاهر بهتر
-          surface: const Color(0xFFFAFAFA), // پس‌زمینه روشن‌تر
+          surface: Color.fromARGB(255, 176, 188, 233), // پس‌زمینه روشن با ته‌مایه آبی
           primaryContainer: const Color(0xFFE3F2FD), // کانتینر اصلی روشن
           secondaryContainer: const Color(0xFFF3E5F5), // کانتینر ثانویه روشن
           onSurface: const Color(0xFF212121), // متن اصلی تیره‌تر
@@ -241,7 +241,7 @@ class AppTheme {
           color: Color(0xFFFFFFFF), // کارت‌ها سفید
           elevation: 2,
         ),
-        scaffoldBackgroundColor: const Color(0xFFF5F5F5), // پس‌زمینه اصلی (خاکستری روشن)
+        scaffoldBackgroundColor: Color.fromARGB(255, 176, 188, 233),  // پس‌زمینه اصلی با ته‌مایه آبی
       );
 
   /// تم تاریک برنامه

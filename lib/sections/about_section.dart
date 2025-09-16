@@ -29,7 +29,7 @@ class _AboutSectionState extends State<AboutSection> {
               Text(
                 AppLocalizations.of(context).aboutIntroP1,
                 style: TextStyle(
-                  fontSize: ResponsiveHelper.getProportionateFontSize(1.6),
+                  fontSize: ResponsiveHelper.getProportionateFontSize(1.2),
                   fontWeight: FontWeight.bold,
                   color: AppTheme.textPrimary(context),
                 ),
@@ -38,7 +38,7 @@ class _AboutSectionState extends State<AboutSection> {
               Text(
                 AppLocalizations.of(context).aboutIntroP2,
                 style: TextStyle(
-                  fontSize: ResponsiveHelper.getProportionateFontSize(1.6),
+                  fontSize: ResponsiveHelper.getProportionateFontSize(1.2),
                   fontWeight: FontWeight.bold,
                   color: AppTheme.textPrimary(context),
                 ),
@@ -56,7 +56,7 @@ class _AboutSectionState extends State<AboutSection> {
               Text(
                 AppLocalizations.of(context).aboutEducationP1,
                 style: TextStyle(
-                  fontSize: ResponsiveHelper.getProportionateFontSize(1.6),
+                  fontSize: ResponsiveHelper.getProportionateFontSize(1.2),
                   fontWeight: FontWeight.bold,
                   color: AppTheme.textPrimary(context),
                 ),
@@ -65,7 +65,7 @@ class _AboutSectionState extends State<AboutSection> {
               Text(
                 AppLocalizations.of(context).aboutEducationP2,
                 style: TextStyle(
-                  fontSize: ResponsiveHelper.getProportionateFontSize(1.6),
+                  fontSize: ResponsiveHelper.getProportionateFontSize(1.2),
                   fontWeight: FontWeight.bold,
                   color: AppTheme.textPrimary(context),
                 ),
@@ -83,7 +83,7 @@ class _AboutSectionState extends State<AboutSection> {
               Text(
                 AppLocalizations.of(context).aboutMitbP1,
                 style: TextStyle(
-                  fontSize: ResponsiveHelper.getProportionateFontSize(1.6),
+                  fontSize: ResponsiveHelper.getProportionateFontSize(1.2),
                   fontWeight: FontWeight.bold,
                   color: AppTheme.textPrimary(context),
                 ),

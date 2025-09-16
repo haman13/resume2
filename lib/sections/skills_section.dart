@@ -31,25 +31,31 @@ class SkillsSection extends StatelessWidget {
             ExpandableCard(
               title: entry.key,
               backgroundColor: AppTheme.greenCardBackground(context),
-              child: Wrap(
-                spacing: ResponsiveHelper.getProportionateSpacing(0.8),
-                runSpacing: ResponsiveHelper.getProportionateSpacing(0.8),
-                children: entry.value.map((skill) {
-                  return Chip(
-                    label: Text(
-                      skill,
-                      style: TextStyle(
-                        fontSize: ResponsiveHelper.getProportionateFontSize(1.4),
-                        color: AppTheme.textPrimary(context),
-                      ),
-                    ),
-                    backgroundColor: AppTheme.chipBackground(context),
-                    padding: ResponsiveHelper.getProportionatePadding(
-                      horizontal: 0.8,
-                      vertical: 0.4,
-                    ),
-                  );
-                }).toList(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: ResponsiveHelper.getProportionateSpacing(1.0)),
+                  Wrap(
+                    spacing: ResponsiveHelper.getProportionateSpacing(0.8),
+                    runSpacing: ResponsiveHelper.getProportionateSpacing(0.8),
+                    children: entry.value.map((skill) {
+                      return Chip(
+                        label: Text(
+                          skill,
+                          style: TextStyle(
+                            fontSize: ResponsiveHelper.getProportionateFontSize(1.2),
+                            color: AppTheme.textPrimary(context),
+                          ),
+                        ),
+                        backgroundColor: AppTheme.chipBackground(context),
+                        padding: ResponsiveHelper.getProportionatePadding(
+                          horizontal: 0.8,
+                          vertical: 0.4,
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ],
               ),
             ),
             SizedBox(height: ResponsiveHelper.getProportionateSpacing(2.0)),
