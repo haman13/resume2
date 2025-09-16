@@ -84,7 +84,7 @@ class AppTheme {
   /// Duration استاندارد برای انیمیشن‌ها
   /// استفاده: انیمیشن‌های معمولی
   /// مکان: در صورت نیاز در فایل‌های مختلف
-  static const Duration normal = Duration(milliseconds: 250);
+  static const Duration normal = Duration(milliseconds: 850);
 
   // ==================== متدهای رنگ پویا ====================
   

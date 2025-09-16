@@ -17,7 +17,7 @@ import 'providers/locale_provider.dart';
 class CustomResumePage extends StatefulWidget {
   final VoidCallback? onThemeToggle;
   final bool isDarkMode;
-  
+
   const CustomResumePage({
     super.key,
     this.onThemeToggle,
@@ -47,15 +47,16 @@ class _CustomResumePageState extends State<CustomResumePage> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     // مقداردهی اولیه ResponsiveHelper
     ResponsiveHelper.init(context);
-    
+
     final localeProvider = Provider.of<LocaleProvider>(context);
     return Directionality(
-      textDirection: localeProvider.locale.languageCode == 'fa' ? TextDirection.rtl : TextDirection.ltr,
+      textDirection: localeProvider.locale.languageCode == 'fa'
+          ? TextDirection.rtl
+          : TextDirection.ltr,
       child: Scaffold(
         body: Container(
           color: Theme.of(context).colorScheme.surface,
@@ -63,7 +64,7 @@ class _CustomResumePageState extends State<CustomResumePage> {
             children: [
               _buildHeader(),
               Expanded(
-                child: ResponsiveHelper.isMobile(context) 
+                child: ResponsiveHelper.isMobile(context)
                     ? _buildMobileLayout()
                     : _buildDesktopLayout(),
               ),
@@ -114,7 +115,8 @@ class _CustomResumePageState extends State<CustomResumePage> {
                 child: Container(
                   color: Theme.of(context).cardColor,
                   child: SingleChildScrollView(
-                    padding: ResponsiveHelper.getProportionatePadding(vertical: 2.4),
+                    padding:
+                        ResponsiveHelper.getProportionatePadding(vertical: 2.4),
                     child: _buildSideMenu(),
                   ),
                 ),
@@ -124,7 +126,8 @@ class _CustomResumePageState extends State<CustomResumePage> {
                 child: Container(
                   color: Theme.of(context).cardColor,
                   child: SingleChildScrollView(
-                    padding: ResponsiveHelper.getProportionatePadding(vertical: 2.4),
+                    padding:
+                        ResponsiveHelper.getProportionatePadding(vertical: 2.4),
                     child: _buildSideMenu(),
                   ),
                 ),
@@ -159,60 +162,69 @@ class _CustomResumePageState extends State<CustomResumePage> {
   Widget _buildMobileMenuItem(String title) {
     final isSelected = _selectedSection == title;
     final localizedTitle = _getLocalizedTitle(title);
-    
+
     return Container(
       margin: ResponsiveHelper.getProportionateMargin(horizontal: 1.0),
-      child: isSelected 
-        ? GestureDetector(
-            onTap: () => _onMenuSelected(title),
-            child: Container(
-              padding: ResponsiveHelper.getProportionatePadding(
-                horizontal: 2.0,
-                vertical: 1.0,
-              ),
-              decoration: BoxDecoration(
-                color: AppTheme.selectedContainer(context),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(Directionality.of(context) == TextDirection.rtl ? AppTheme.radiusPill : AppTheme.radiusSmall),
-                  topRight: Radius.circular(Directionality.of(context) == TextDirection.rtl ? AppTheme.radiusSmall : AppTheme.radiusPill),
-                  bottomLeft: Radius.circular(AppTheme.radiusPill),
-                  bottomRight: Radius.circular(AppTheme.radiusSmall),
-                ),
-              ),
-              child: Text(
-                localizedTitle,
-                style: TextStyle(
-                  fontSize: ResponsiveHelper.getProportionateFontSize(1.6),
-                  color: Theme.of(context).colorScheme.primary,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          )
-        : Material(
-            color: Colors.transparent,
-            child: InkWell(
+      child: isSelected
+          ? GestureDetector(
               onTap: () => _onMenuSelected(title),
-              borderRadius: BorderRadius.circular(AppTheme.radiusSmall),
               child: Container(
                 padding: ResponsiveHelper.getProportionatePadding(
                   horizontal: 2.0,
                   vertical: 1.0,
                 ),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(AppTheme.radiusSmall),
+                  color: AppTheme.selectedContainer(context),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(
+                        Directionality.of(context) == TextDirection.rtl
+                            ? AppTheme.radiusPill
+                            : AppTheme.radiusSmall),
+                    topRight: Radius.circular(
+                        Directionality.of(context) == TextDirection.rtl
+                            ? AppTheme.radiusSmall
+                            : AppTheme.radiusPill),
+                    bottomLeft: Radius.circular(AppTheme.radiusPill),
+                    bottomRight: Radius.circular(AppTheme.radiusSmall),
+                  ),
                 ),
                 child: Text(
                   localizedTitle,
                   style: TextStyle(
                     fontSize: ResponsiveHelper.getProportionateFontSize(1.6),
-                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.87),
-                    fontWeight: FontWeight.normal,
+                    color: Theme.of(context).colorScheme.primary,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            )
+          : Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () => _onMenuSelected(title),
+                borderRadius: BorderRadius.circular(AppTheme.radiusSmall),
+                child: Container(
+                  padding: ResponsiveHelper.getProportionatePadding(
+                    horizontal: 2.0,
+                    vertical: 1.0,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(AppTheme.radiusSmall),
+                  ),
+                  child: Text(
+                    localizedTitle,
+                    style: TextStyle(
+                      fontSize: ResponsiveHelper.getProportionateFontSize(1.6),
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withOpacity(0.87),
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
     );
   }
 
@@ -223,7 +235,7 @@ class _CustomResumePageState extends State<CustomResumePage> {
           ? ResponsiveHelper.getProportionateScreenHeight(15.0)
           : null,
       padding: ResponsiveHelper.isDesktop(context)
-          ? const EdgeInsets.only(top: 10,right: 25,left: 10,bottom: 0)
+          ? const EdgeInsets.only(top: 10, right: 25, left: 10, bottom: 0)
           : ResponsiveHelper.getProportionatePadding(
               horizontal: 2.4,
               vertical: 2.4,
@@ -241,9 +253,12 @@ class _CustomResumePageState extends State<CustomResumePage> {
             right: Directionality.of(context) == TextDirection.rtl ? null : 0,
             child: Row(
               children: [
+                _buildContactButton(),
+                const SizedBox(width: 8),
                 _buildThemeToggleButton(),
                 const SizedBox(width: 8),
                 _buildLanguageToggleButton(),
+                const SizedBox(width: 8),
               ],
             ),
           ),
@@ -252,10 +267,89 @@ class _CustomResumePageState extends State<CustomResumePage> {
     );
   }
 
+  // دکمه تماس
+  Widget _buildContactButton() {
+    return Container(
+      margin: ResponsiveHelper.isDesktop(context)
+          ? EdgeInsets.zero
+          : const EdgeInsets.all(8),
+      child: IconButton(
+        onPressed: _showContactDialog,
+        icon: Icon(
+          Icons.contact_phone,
+          color: Theme.of(context).colorScheme.onSurface,
+          size: 24,
+        ),
+        style: IconButton.styleFrom(
+          backgroundColor:
+              Theme.of(context).colorScheme.surface.withOpacity(0.8),
+          shape: const CircleBorder(),
+          padding: ResponsiveHelper.isDesktop(context)
+              ? EdgeInsets.zero
+              : const EdgeInsets.all(8),
+        ),
+        tooltip: 'Contact',
+      ),
+    );
+  }
+
+  void _showContactDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(
+            'Contact',
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onSurface,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.phone),
+                title: const Text('09120069744'),
+                onTap: () async {
+                  final uri = Uri.parse('tel:+989120069744');
+                  if (await canLaunchUrl(uri)) {
+                    await launchUrl(uri);
+                  }
+                },
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.email_outlined),
+                title: const Text('hamancodes@gmail.com'),
+                onTap: () async {
+                  final uri = Uri.parse('mailto:hamancodes@gmail.com');
+                  if (await canLaunchUrl(uri)) {
+                    await launchUrl(uri);
+                  }
+                },
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   // دکمه تغییر تم
   Widget _buildThemeToggleButton() {
     return Container(
-      margin: ResponsiveHelper.isDesktop(context) ? EdgeInsets.zero : const EdgeInsets.all(8),
+      margin: ResponsiveHelper.isDesktop(context)
+          ? EdgeInsets.zero
+          : const EdgeInsets.all(8),
       child: IconButton(
         onPressed: widget.onThemeToggle,
         icon: Icon(
@@ -264,11 +358,16 @@ class _CustomResumePageState extends State<CustomResumePage> {
           size: 24,
         ),
         style: IconButton.styleFrom(
-          backgroundColor: Theme.of(context).colorScheme.surface.withOpacity(0.8),
+          backgroundColor:
+              Theme.of(context).colorScheme.surface.withOpacity(0.8),
           shape: const CircleBorder(),
-          padding: ResponsiveHelper.isDesktop(context) ? EdgeInsets.zero : const EdgeInsets.all(8),
+          padding: ResponsiveHelper.isDesktop(context)
+              ? EdgeInsets.zero
+              : const EdgeInsets.all(8),
         ),
-        tooltip: widget.isDarkMode ? AppLocalizations.of(context).lightTheme : AppLocalizations.of(context).darkTheme,
+        tooltip: widget.isDarkMode
+            ? AppLocalizations.of(context).lightTheme
+            : AppLocalizations.of(context).darkTheme,
       ),
     );
   }
@@ -277,18 +376,25 @@ class _CustomResumePageState extends State<CustomResumePage> {
     return Consumer<LocaleProvider>(
       builder: (context, localeProvider, child) {
         return Container(
-          margin: ResponsiveHelper.isDesktop(context) ? EdgeInsets.zero : const EdgeInsets.all(8),
+          margin: ResponsiveHelper.isDesktop(context)
+              ? EdgeInsets.zero
+              : const EdgeInsets.all(8),
           child: IconButton(
             onPressed: () => localeProvider.toggleLocale(),
             icon: Icon(
-              localeProvider.locale.languageCode == 'fa' ? Icons.language : Icons.translate,
+              localeProvider.locale.languageCode == 'fa'
+                  ? Icons.language
+                  : Icons.translate,
               color: Theme.of(context).colorScheme.onSurface,
               size: 24,
             ),
             style: IconButton.styleFrom(
-              backgroundColor: Theme.of(context).colorScheme.surface.withOpacity(0.8),
+              backgroundColor:
+                  Theme.of(context).colorScheme.surface.withOpacity(0.8),
               shape: const CircleBorder(),
-              padding: ResponsiveHelper.isDesktop(context) ? EdgeInsets.zero : const EdgeInsets.all(8),
+              padding: ResponsiveHelper.isDesktop(context)
+                  ? EdgeInsets.zero
+                  : const EdgeInsets.all(8),
             ),
             tooltip: AppLocalizations.of(context).changeLanguage,
           ),
@@ -350,7 +456,8 @@ class _CustomResumePageState extends State<CustomResumePage> {
               label: AppLocalizations.of(context).connectLinkedin,
               color: AppTheme.linkedIn,
               onPressed: () async {
-                final url = Uri.parse('https://www.linkedin.com/in/haman-darvish-6a489a25a/');
+                final url = Uri.parse(
+                    'https://www.linkedin.com/in/haman-darvish-6a489a25a/');
                 if (await canLaunchUrl(url)) {
                   await launchUrl(
                     url,
@@ -405,37 +512,38 @@ class _CustomResumePageState extends State<CustomResumePage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-              _ConnectButton(
-                icon: FontAwesomeIcons.github,
-                label: AppLocalizations.of(context).connectGithub,
-                color: AppTheme.githubForDarkTheme(context),
-                onPressed: () async {
-                  final url = Uri.parse('https://github.com/haman13');
-                  if (await canLaunchUrl(url)) {
-                    await launchUrl(
-                      url,
-                      mode: LaunchMode.externalApplication,
-                      webOnlyWindowName: '_blank',
-                    );
-                  }
-                },
-              ),
-              SizedBox(width: ResponsiveHelper.getProportionateSpacing(1.0)),
-              _ConnectButton(
-                icon: FontAwesomeIcons.linkedin,
-                label: AppLocalizations.of(context).connectLinkedin,
-                color: AppTheme.linkedIn,
-                onPressed: () async {
-                  final url = Uri.parse('https://www.linkedin.com/in/haman-darvish-6a489a25a/');
-                  if (await canLaunchUrl(url)) {
-                    await launchUrl(
-                      url,
-                      mode: LaunchMode.externalApplication,
-                      webOnlyWindowName: '_blank',
-                    );
-                  }
-                },
-              ),
+                _ConnectButton(
+                  icon: FontAwesomeIcons.github,
+                  label: AppLocalizations.of(context).connectGithub,
+                  color: AppTheme.githubForDarkTheme(context),
+                  onPressed: () async {
+                    final url = Uri.parse('https://github.com/haman13');
+                    if (await canLaunchUrl(url)) {
+                      await launchUrl(
+                        url,
+                        mode: LaunchMode.externalApplication,
+                        webOnlyWindowName: '_blank',
+                      );
+                    }
+                  },
+                ),
+                SizedBox(width: ResponsiveHelper.getProportionateSpacing(1.0)),
+                _ConnectButton(
+                  icon: FontAwesomeIcons.linkedin,
+                  label: AppLocalizations.of(context).connectLinkedin,
+                  color: AppTheme.linkedIn,
+                  onPressed: () async {
+                    final url = Uri.parse(
+                        'https://www.linkedin.com/in/haman-darvish-6a489a25a/');
+                    if (await canLaunchUrl(url)) {
+                      await launchUrl(
+                        url,
+                        mode: LaunchMode.externalApplication,
+                        webOnlyWindowName: '_blank',
+                      );
+                    }
+                  },
+                ),
               ],
             ),
           ),
@@ -461,63 +569,69 @@ class _CustomResumePageState extends State<CustomResumePage> {
   Widget _buildMenuItem(String title) {
     final isSelected = _selectedSection == title;
     final localizedTitle = _getLocalizedTitle(title);
-    
+
     return Padding(
       padding: ResponsiveHelper.getProportionatePadding(
         horizontal: 1.6,
         vertical: 0.4,
       ),
-      child: isSelected 
-        ? GestureDetector(
-            onTap: () => _onMenuSelected(title),
-            child: Container(
-              padding: ResponsiveHelper.getProportionatePadding(
-                vertical: 1.2,
-                horizontal: 1.6,
-              ),
-              decoration: BoxDecoration(
-                color: AppTheme.selectedContainer(context),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(Directionality.of(context) == TextDirection.rtl ? 200 : 8),
-                  topRight: Radius.circular(Directionality.of(context) == TextDirection.rtl ? 8 : 200),
-                  bottomLeft: Radius.circular(8),
-                  bottomRight: Radius.circular(8),
-                ),
-              ),
-              child: Text(
-                localizedTitle,
-                style: TextStyle(
-                  fontSize: ResponsiveHelper.getProportionateFontSize(1.6),
-                  color: AppTheme.textSelected(context),
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          )
-        : Material(
-            color: Colors.transparent,
-            child: InkWell(
+      child: isSelected
+          ? GestureDetector(
               onTap: () => _onMenuSelected(title),
-              borderRadius: BorderRadius.circular(8),
               child: Container(
                 padding: ResponsiveHelper.getProportionatePadding(
                   vertical: 1.2,
                   horizontal: 1.6,
                 ),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
+                  color: AppTheme.selectedContainer(context),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(
+                        Directionality.of(context) == TextDirection.rtl
+                            ? 200
+                            : 8),
+                    topRight: Radius.circular(
+                        Directionality.of(context) == TextDirection.rtl
+                            ? 8
+                            : 200),
+                    bottomLeft: Radius.circular(8),
+                    bottomRight: Radius.circular(8),
+                  ),
                 ),
                 child: Text(
                   localizedTitle,
                   style: TextStyle(
-                    fontSize: ResponsiveHelper.getProportionateFontSize(1.2),
-                    color: AppTheme.textSecondaryOpacity(context),
-                    fontWeight: FontWeight.normal,
+                    fontSize: ResponsiveHelper.getProportionateFontSize(1.6),
+                    color: AppTheme.textSelected(context),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            )
+          : Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () => _onMenuSelected(title),
+                borderRadius: BorderRadius.circular(8),
+                child: Container(
+                  padding: ResponsiveHelper.getProportionatePadding(
+                    vertical: 1.2,
+                    horizontal: 1.6,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(
+                    localizedTitle,
+                    style: TextStyle(
+                      fontSize: ResponsiveHelper.getProportionateFontSize(1.2),
+                      color: AppTheme.textSecondaryOpacity(context),
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
     );
   }
 
@@ -598,7 +712,8 @@ class _ConnectButton extends StatelessWidget {
     final double _verticalPad = _isDesktop
         ? ResponsiveHelper.getProportionateSpacing(0.6)
         : ResponsiveHelper.getProportionateSpacing(1.2);
-    final double _estimatedHeight = (_verticalPad * 2) + (_fontSize > _iconSize ? _fontSize : _iconSize);
+    final double _estimatedHeight =
+        (_verticalPad * 2) + (_fontSize > _iconSize ? _fontSize : _iconSize);
     final double _minHeight = _isDesktop ? _estimatedHeight * 0.5 : 0.0;
 
     return Material(
@@ -608,7 +723,8 @@ class _ConnectButton extends StatelessWidget {
         onTap: onPressed,
         borderRadius: BorderRadius.circular(30),
         child: Container(
-          constraints: _isDesktop ? BoxConstraints(minHeight: _minHeight) : null,
+          constraints:
+              _isDesktop ? BoxConstraints(minHeight: _minHeight) : null,
           padding: ResponsiveHelper.isDesktop(context)
               ? ResponsiveHelper.getProportionatePadding(
                   horizontal: 1.2,
@@ -637,7 +753,7 @@ class _ConnectButton extends StatelessWidget {
                     : ResponsiveHelper.getProportionateSpacing(1.6),
               ),
               Icon(
-                icon, 
+                icon,
                 color: color,
                 size: ResponsiveHelper.isDesktop(context)
                     ? ResponsiveHelper.getProportionateFontSize(1.2)
@@ -650,7 +766,3 @@ class _ConnectButton extends StatelessWidget {
     );
   }
 }
-
-
-
-
