@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_final_fields, unused_field, prefer_const_constructors
+// ignore_for_file: prefer_final_fields, unused_field, prefer_const_constructors, no_leading_underscores_for_local_identifiers
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -108,16 +108,27 @@ class _CustomResumePageState extends State<CustomResumePage> {
     return Row(
       children: [
         // منوی کناری - سمت راست
-        Expanded(
-          flex: ResponsiveHelper.getSideMenuFlex(),
-          child: Container(
-            color: Theme.of(context).cardColor,
-            child: SingleChildScrollView(
-              padding: ResponsiveHelper.getProportionatePadding(vertical: 2.4),
-              child: _buildSideMenu(),
-            ),
-          ),
-        ),
+        ResponsiveHelper.isDesktop(context)
+            ? SizedBox(
+                width: MediaQuery.of(context).size.width * 0.20,
+                child: Container(
+                  color: Theme.of(context).cardColor,
+                  child: SingleChildScrollView(
+                    padding: ResponsiveHelper.getProportionatePadding(vertical: 2.4),
+                    child: _buildSideMenu(),
+                  ),
+                ),
+              )
+            : Expanded(
+                flex: ResponsiveHelper.getSideMenuFlex(),
+                child: Container(
+                  color: Theme.of(context).cardColor,
+                  child: SingleChildScrollView(
+                    padding: ResponsiveHelper.getProportionatePadding(vertical: 2.4),
+                    child: _buildSideMenu(),
+                  ),
+                ),
+              ),
         // محتوای اصلی - سمت چپ
         Expanded(
           flex: ResponsiveHelper.getMainContentFlex(),
@@ -333,7 +344,7 @@ class _CustomResumePageState extends State<CustomResumePage> {
                 }
               },
             ),
-            SizedBox(width: ResponsiveHelper.getProportionateSpacing(1.5)),
+            SizedBox(width: ResponsiveHelper.getProportionateSpacing(3.0)),
             _ConnectButton(
               icon: FontAwesomeIcons.linkedin,
               label: AppLocalizations.of(context).connectLinkedin,
@@ -387,9 +398,13 @@ class _CustomResumePageState extends State<CustomResumePage> {
         ),
         // دکمه‌های اتصال - سمت چپ
         Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
+          child: Padding(
+            padding: EdgeInsets.only(
+              top: ResponsiveHelper.getProportionateSpacing(1.5),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
               _ConnectButton(
                 icon: FontAwesomeIcons.github,
                 label: AppLocalizations.of(context).connectGithub,
@@ -405,7 +420,7 @@ class _CustomResumePageState extends State<CustomResumePage> {
                   }
                 },
               ),
-              SizedBox(width: 0),
+              SizedBox(width: ResponsiveHelper.getProportionateSpacing(1.0)),
               _ConnectButton(
                 icon: FontAwesomeIcons.linkedin,
                 label: AppLocalizations.of(context).connectLinkedin,
@@ -421,7 +436,8 @@ class _CustomResumePageState extends State<CustomResumePage> {
                   }
                 },
               ),
-            ],
+              ],
+            ),
           ),
         ),
       ],
