@@ -17,6 +17,10 @@ class AboutSection extends StatefulWidget {
 class _AboutSectionState extends State<AboutSection> {
   @override
   Widget build(BuildContext context) {
+    final bool _isMobile = ResponsiveHelper.isMobile(context);
+    final double _screenWidth = MediaQuery.of(context).size.width;
+    // عنوان کارت توسط خود ExpandableCard تنظیم می‌شود
+    final double _normalFontSize = _screenWidth * 0.030;   // متن کارت
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -30,7 +34,7 @@ class _AboutSectionState extends State<AboutSection> {
               Text(
                 AppLocalizations.of(context).aboutIntroP1,
                 style: TextStyle(
-                  fontSize: ResponsiveHelper.getProportionateFontSize(1.2),
+                  fontSize: _isMobile ? _normalFontSize : ResponsiveHelper.getProportionateFontSize(1.2),
                   fontWeight: FontWeight.bold,
                   color: AppTheme.textPrimary(context),
                 ),
@@ -40,7 +44,7 @@ class _AboutSectionState extends State<AboutSection> {
               Text(
                 AppLocalizations.of(context).aboutIntroP2,
                 style: TextStyle(
-                  fontSize: ResponsiveHelper.getProportionateFontSize(1.2),
+                  fontSize: _isMobile ? _normalFontSize : ResponsiveHelper.getProportionateFontSize(1.2),
                   fontWeight: FontWeight.bold,
                   color: AppTheme.textPrimary(context),
                 ),
@@ -59,7 +63,7 @@ class _AboutSectionState extends State<AboutSection> {
               Text(
                 AppLocalizations.of(context).aboutEducationP1,
                 style: TextStyle(
-                  fontSize: ResponsiveHelper.getProportionateFontSize(1.2),
+                  fontSize: _isMobile ? _normalFontSize : ResponsiveHelper.getProportionateFontSize(1.2),
                   fontWeight: FontWeight.bold,
                   color: AppTheme.textPrimary(context),
                 ),
@@ -69,7 +73,7 @@ class _AboutSectionState extends State<AboutSection> {
               Text(
                 AppLocalizations.of(context).aboutEducationP2,
                 style: TextStyle(
-                  fontSize: ResponsiveHelper.getProportionateFontSize(1.2),
+                  fontSize: _isMobile ? _normalFontSize : ResponsiveHelper.getProportionateFontSize(1.2),
                   fontWeight: FontWeight.bold,
                   color: AppTheme.textPrimary(context),
                 ),
@@ -88,7 +92,7 @@ class _AboutSectionState extends State<AboutSection> {
               Text(
                 AppLocalizations.of(context).aboutMitbP1,
                 style: TextStyle(
-                  fontSize: ResponsiveHelper.getProportionateFontSize(1.2),
+                  fontSize: _isMobile ? _normalFontSize : ResponsiveHelper.getProportionateFontSize(1.2),
                   fontWeight: FontWeight.bold,
                   color: AppTheme.textPrimary(context),
                 ),

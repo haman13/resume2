@@ -33,6 +33,9 @@ class _ExpandableCardState extends State<ExpandableCard> {
 
   @override
   Widget build(BuildContext context) {
+    final bool _isMobile = ResponsiveHelper.isMobile(context);
+    final double _screenWidth = MediaQuery.of(context).size.width;
+    final double _selectedFontSize = _screenWidth * 0.035; // 3.5% عرض صفحه برای عنوان کارت در موبایل
     return Card(
       color: widget.backgroundColor ?? AppTheme.cardBackgroundColor(context),
       surfaceTintColor: Colors.transparent,
@@ -62,7 +65,9 @@ class _ExpandableCardState extends State<ExpandableCard> {
                     child: Text(
                       widget.title,
                       style: TextStyle(
-                        fontSize: ResponsiveHelper.getProportionateFontSize(1.5),
+                        fontSize: _isMobile
+                            ? _selectedFontSize
+                            : ResponsiveHelper.getProportionateFontSize(1.5),
                         fontWeight: FontWeight.bold,
                         color: AppTheme.textPrimary(context),
                       ),

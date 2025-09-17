@@ -164,6 +164,9 @@ class _CustomResumePageState extends State<CustomResumePage> {
   Widget _buildMobileMenuItem(String title) {
     final isSelected = _selectedSection == title;
     final localizedTitle = _getLocalizedTitle(title);
+    final double _screenWidth = MediaQuery.of(context).size.width;
+    final double _selectedFontSize = _screenWidth * 0.035; // 4.5% عرض صفحه
+    final double _normalFontSize = _screenWidth * 0.030;   // 4% عرض صفحه
 
     return Container(
       margin: ResponsiveHelper.getProportionateMargin(horizontal: 1.0),
@@ -193,7 +196,7 @@ class _CustomResumePageState extends State<CustomResumePage> {
                 child: Text(
                   localizedTitle,
                   style: TextStyle(
-                    fontSize: ResponsiveHelper.getProportionateFontSize(1.6),
+                    fontSize: _selectedFontSize,
                     color: Theme.of(context).colorScheme.primary,
                     fontWeight: FontWeight.bold,
                   ),
@@ -216,7 +219,7 @@ class _CustomResumePageState extends State<CustomResumePage> {
                   child: Text(
                     localizedTitle,
                     style: TextStyle(
-                      fontSize: ResponsiveHelper.getProportionateFontSize(1.6),
+                      fontSize: _normalFontSize,
                       color: Theme.of(context)
                           .colorScheme
                           .onSurface
