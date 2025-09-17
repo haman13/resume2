@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_final_fields, unused_field
+// ignore_for_file: prefer_final_fields, unused_field, no_leading_underscores_for_local_identifiers
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
