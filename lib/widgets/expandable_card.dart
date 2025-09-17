@@ -37,7 +37,11 @@ class _ExpandableCardState extends State<ExpandableCard> {
       color: widget.backgroundColor ?? AppTheme.cardBackgroundColor(context),
       surfaceTintColor: Colors.transparent,
       elevation: 2,
-      margin: const EdgeInsets.only(bottom: 16),
+      margin: EdgeInsets.only(
+        bottom: ResponsiveHelper.isMobile(context)
+            ? ResponsiveHelper.getProportionateSpacing(2.0)
+            : 16,
+      ),
       child: Column(
         children: [
           InkWell(
@@ -46,7 +50,11 @@ class _ExpandableCardState extends State<ExpandableCard> {
               widget.onExpansionChanged?.call(_isExpanded);
             },
             child: Padding(
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.all(
+                ResponsiveHelper.isMobile(context)
+                    ? ResponsiveHelper.getProportionateSpacing(4.0)
+                    : 16,
+              ),
               child: Row(
                 children: [
                   Expanded(
@@ -79,7 +87,18 @@ class _ExpandableCardState extends State<ExpandableCard> {
                 : CrossFadeState.showFirst,
             firstChild: const SizedBox.shrink(),
             secondChild: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+              padding: EdgeInsets.fromLTRB(
+                ResponsiveHelper.isMobile(context)
+                    ? ResponsiveHelper.getProportionateSpacing(4.0)
+                    : 16,
+                0,
+                ResponsiveHelper.isMobile(context)
+                    ? ResponsiveHelper.getProportionateSpacing(4.0)
+                    : 16,
+                ResponsiveHelper.isMobile(context)
+                    ? ResponsiveHelper.getProportionateSpacing(4.0)
+                    : 16,
+              ),
               child: widget.child,
             ),
           ),

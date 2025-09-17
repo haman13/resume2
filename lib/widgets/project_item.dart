@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import '../theme.dart';
+import 'package:resume/utils/responsive_helper.dart';
 
 class ProjectItem extends StatelessWidget {
   final String title;
@@ -24,7 +25,11 @@ class ProjectItem extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: AppTheme.borderColor(context)),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(
+          ResponsiveHelper.isMobile(context)
+              ? ResponsiveHelper.getProportionateSpacing(1.0)
+              : 8,
+        ),
       ),
       child: IntrinsicHeight(
         child: Row(
@@ -33,37 +38,59 @@ class ProjectItem extends StatelessWidget {
             Expanded(
               flex: 2,
               child: Padding(
-                padding: const EdgeInsets.all(16),
+                padding: EdgeInsets.all(
+                  ResponsiveHelper.isMobile(context)
+                      ? ResponsiveHelper.getProportionateSpacing(4.0)
+                      : 16,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       title,
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: ResponsiveHelper.isMobile(context)
+                            ? ResponsiveHelper.getProportionateFontSize(1.6)
+                            : 18,
                         fontWeight: FontWeight.bold,
                         color: AppTheme.textPrimary(context),
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(
+                      height: ResponsiveHelper.isMobile(context)
+                          ? ResponsiveHelper.getProportionateSpacing(1.2)
+                          : 8,
+                    ),
                     Text(
                       description,
                       style: TextStyle(
                         color: AppTheme.textPrimary(context),
-                        fontSize: 14,
+                        fontSize: ResponsiveHelper.isMobile(context)
+                            ? ResponsiveHelper.getProportionateFontSize(1.2)
+                            : 14,
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(
+                      height: ResponsiveHelper.isMobile(context)
+                          ? ResponsiveHelper.getProportionateSpacing(2.0)
+                          : 16,
+                    ),
                     Wrap(
-                      spacing: 8,
-                      runSpacing: 8,
+                      spacing: ResponsiveHelper.isMobile(context)
+                          ? ResponsiveHelper.getProportionateSpacing(1.0)
+                          : 8,
+                      runSpacing: ResponsiveHelper.isMobile(context)
+                          ? ResponsiveHelper.getProportionateSpacing(1.0)
+                          : 8,
                       children: technologies
                           .map((tech) => Chip(
                                 label: Text(
                                   tech,
                                   style: TextStyle(
                                     color: AppTheme.textPrimary(context),
-                                    fontSize: 12,
+                                    fontSize: ResponsiveHelper.isMobile(context)
+                                        ? ResponsiveHelper.getProportionateFontSize(1.0)
+                                        : 12,
                                   ),
                                 ),
                                 backgroundColor:
@@ -72,19 +99,29 @@ class ProjectItem extends StatelessWidget {
                           .toList(),
                     ),
                     if (links.isNotEmpty) ...[
-                      const SizedBox(height: 16),
+                      SizedBox(
+                        height: ResponsiveHelper.isMobile(context)
+                            ? ResponsiveHelper.getProportionateSpacing(2.0)
+                            : 16,
+                      ),
                       Row(
                         children: links.entries
                             .map(
                               (entry) => Padding(
-                                padding: const EdgeInsets.only(left: 8),
+                                padding: EdgeInsets.only(
+                                  left: ResponsiveHelper.isMobile(context)
+                                      ? ResponsiveHelper.getProportionateSpacing(1.0)
+                                      : 8,
+                                ),
                                 child: TextButton(
                                   onPressed: entry.value,
                                   child: Text(
                                     entry.key,
                                     style: TextStyle(
                                       color: AppTheme.textPrimary(context),
-                                      fontSize: 14,
+                                      fontSize: ResponsiveHelper.isMobile(context)
+                                          ? ResponsiveHelper.getProportionateFontSize(1.2)
+                                          : 14,
                                     ),
                                   ),
                                 ),
@@ -100,8 +137,13 @@ class ProjectItem extends StatelessWidget {
             Expanded(
               flex: 1,
               child: ClipRRect(
-                borderRadius:
-                    const BorderRadius.horizontal(left: Radius.circular(8)),
+                borderRadius: BorderRadius.horizontal(
+                  left: Radius.circular(
+                    ResponsiveHelper.isMobile(context)
+                        ? ResponsiveHelper.getProportionateSpacing(1.0)
+                        : 8,
+                  ),
+                ),
                 child: _buildProjectImage(),
               ),
             ),

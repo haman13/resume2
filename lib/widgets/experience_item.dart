@@ -33,16 +33,24 @@ class ExperienceItem extends StatelessWidget {
                   Text(
                     role,
                     style: TextStyle(
-                      fontSize: ResponsiveHelper.getProportionateFontSize(1.2),
+                      fontSize: ResponsiveHelper.isMobile(context)
+                          ? ResponsiveHelper.getProportionateFontSize(1.4)
+                          : ResponsiveHelper.getProportionateFontSize(1.2),
                       fontWeight: FontWeight.bold,
                       color: AppTheme.textPrimary(context),
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(
+                    height: ResponsiveHelper.isMobile(context)
+                        ? ResponsiveHelper.getProportionateSpacing(0.6)
+                        : 4,
+                  ),
                   Text(
                     company,
                     style: TextStyle(
-                      fontSize: ResponsiveHelper.getProportionateFontSize(1.2),
+                      fontSize: ResponsiveHelper.isMobile(context)
+                          ? ResponsiveHelper.getProportionateFontSize(1.2)
+                          : ResponsiveHelper.getProportionateFontSize(1.2),
                       color: AppTheme.textGrey(context),
                     ),
                   ),
@@ -53,23 +61,39 @@ class ExperienceItem extends StatelessWidget {
               duration,
               style: TextStyle(
                 color: AppTheme.textGrey(context),
-                fontSize: ResponsiveHelper.getProportionateFontSize(1.2),
+                fontSize: ResponsiveHelper.isMobile(context)
+                    ? ResponsiveHelper.getProportionateFontSize(1.2)
+                    : ResponsiveHelper.getProportionateFontSize(1.2),
               ),
             ),
           ],
         ),
-        const SizedBox(height: 8),
+        SizedBox(
+          height: ResponsiveHelper.isMobile(context)
+              ? ResponsiveHelper.getProportionateSpacing(1.0)
+              : 8,
+        ),
         Text(
           description,
           style: TextStyle(
             color: AppTheme.textPrimary(context),
-            fontSize: ResponsiveHelper.getProportionateFontSize(1.2),
+            fontSize: ResponsiveHelper.isMobile(context)
+                ? ResponsiveHelper.getProportionateFontSize(1.2)
+                : ResponsiveHelper.getProportionateFontSize(1.2),
           ),
         ),
         if (achievements.isNotEmpty) ...[
-          const SizedBox(height: 8),
+          SizedBox(
+            height: ResponsiveHelper.isMobile(context)
+                ? ResponsiveHelper.getProportionateSpacing(1.0)
+                : 8,
+          ),
           ...achievements.map((achievement) => Padding(
-                padding: const EdgeInsets.only(bottom: 4),
+                padding: EdgeInsets.only(
+                  bottom: ResponsiveHelper.isMobile(context)
+                      ? ResponsiveHelper.getProportionateSpacing(0.6)
+                      : 4,
+                ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -77,7 +101,9 @@ class ExperienceItem extends StatelessWidget {
                       '• ',
                       style: TextStyle(
                         color: AppTheme.textPrimary(context),
-                        fontSize: 14,
+                        fontSize: ResponsiveHelper.isMobile(context)
+                            ? ResponsiveHelper.getProportionateFontSize(1.0)
+                            : 14,
                       ),
                     ),
                     Expanded(
@@ -85,7 +111,9 @@ class ExperienceItem extends StatelessWidget {
                         achievement,
                         style: TextStyle(
                           color: AppTheme.textPrimary(context),
-                          fontSize: 14,
+                          fontSize: ResponsiveHelper.isMobile(context)
+                              ? ResponsiveHelper.getProportionateFontSize(1.0)
+                              : 14,
                         ),
                       ),
                     ),

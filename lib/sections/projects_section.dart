@@ -92,7 +92,11 @@ class _ProjectsSectionState extends State<ProjectsSection> {
   Widget _buildLoadingWidget() {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(32.0),
+        padding: EdgeInsets.all(
+          ResponsiveHelper.isMobile(context)
+              ? ResponsiveHelper.getProportionateSpacing(4.0)
+              : 32.0,
+        ),
           child: Column(
             children: [
             CircularProgressIndicator(
@@ -103,7 +107,9 @@ class _ProjectsSectionState extends State<ProjectsSection> {
               AppLocalizations.of(context).loadingProjects,
               style: TextStyle(
                 color: AppTheme.textPrimary(context),
-                fontSize: ResponsiveHelper.getProportionateFontSize(1.4),
+                fontSize: ResponsiveHelper.isMobile(context)
+                    ? ResponsiveHelper.getProportionateFontSize(1.2)
+                    : ResponsiveHelper.getProportionateFontSize(1.4),
               ),
             ),
           ],
@@ -115,20 +121,28 @@ class _ProjectsSectionState extends State<ProjectsSection> {
   Widget _buildErrorWidget(ProjectProvider projectProvider) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(32.0),
+        padding: EdgeInsets.all(
+          ResponsiveHelper.isMobile(context)
+              ? ResponsiveHelper.getProportionateSpacing(4.0)
+              : 32.0,
+        ),
         child: Column(
           children: [
             Icon(
               Icons.error_outline,
               color: AppTheme.textGrey(context),
-              size: 48,
+              size: ResponsiveHelper.isMobile(context)
+                  ? ResponsiveHelper.getProportionateFontSize(3.2)
+                  : 48,
             ),
             SizedBox(height: ResponsiveHelper.getProportionateSpacing(1.6)),
             Text(
               projectProvider.error ?? AppLocalizations.of(context).projectLoadError,
               style: TextStyle(
                 color: AppTheme.textGrey(context),
-                fontSize: ResponsiveHelper.getProportionateFontSize(1.4),
+                fontSize: ResponsiveHelper.isMobile(context)
+                    ? ResponsiveHelper.getProportionateFontSize(1.2)
+                    : ResponsiveHelper.getProportionateFontSize(1.4),
               ),
               textAlign: TextAlign.center,
             ),
@@ -140,7 +154,11 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                   onPressed: () => projectProvider.refreshProjects(),
                   child: Text(AppLocalizations.of(context).retry),
                 ),
-                SizedBox(width: ResponsiveHelper.getProportionateSpacing(1.6)),
+                SizedBox(
+                  width: ResponsiveHelper.isMobile(context)
+                      ? ResponsiveHelper.getProportionateSpacing(1.0)
+                      : ResponsiveHelper.getProportionateSpacing(1.6),
+                ),
                 ElevatedButton(
                   onPressed: () async {
                     final isConnected = await projectProvider.testDatabaseConnection();
@@ -168,20 +186,28 @@ class _ProjectsSectionState extends State<ProjectsSection> {
   Widget _buildEmptyWidget() {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(32.0),
+        padding: EdgeInsets.all(
+          ResponsiveHelper.isMobile(context)
+              ? ResponsiveHelper.getProportionateSpacing(4.0)
+              : 32.0,
+        ),
         child: Column(
           children: [
             Icon(
               Icons.folder_open_outlined,
               color: AppTheme.textGrey(context),
-              size: 48,
+              size: ResponsiveHelper.isMobile(context)
+                  ? ResponsiveHelper.getProportionateFontSize(3.2)
+                  : 48,
             ),
             SizedBox(height: ResponsiveHelper.getProportionateSpacing(1.6)),
             Text(
               AppLocalizations.of(context).noProjectsFound,
               style: TextStyle(
                 color: AppTheme.textGrey(context),
-                fontSize: ResponsiveHelper.getProportionateFontSize(1.4),
+                fontSize: ResponsiveHelper.isMobile(context)
+                    ? ResponsiveHelper.getProportionateFontSize(1.2)
+                    : ResponsiveHelper.getProportionateFontSize(1.4),
               ),
             ),
           ],

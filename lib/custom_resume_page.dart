@@ -30,6 +30,8 @@ class CustomResumePage extends StatefulWidget {
 
 class _CustomResumePageState extends State<CustomResumePage> {
   String _selectedSection = 'aboutMe'; // پیش‌فرض انتخاب شده
+  double? _headerHeightMobileEstimate; // برآورد ارتفاع هدر در موبایل
+  double headerIconSize = 24.0; // اندازه آیکون هدر (قابل تنظیم)
 
   String _getLocalizedTitle(String key) {
     final localizations = AppLocalizations.of(context);
@@ -243,6 +245,27 @@ class _CustomResumePageState extends State<CustomResumePage> {
             ),
       child: Stack(
         children: [
+          // محاسبه و ذخیره برآورد ارتفاع هدر در موبایل بر اساس اجزای داخلی
+          if (ResponsiveHelper.isMobile(context))
+            Builder(
+              builder: (context) {
+                final double profileSize = ResponsiveHelper.getProfileImageSize();
+                final double spacingAboveName = ResponsiveHelper.getProportionateSpacing(1.5);
+                final double nameFontSize = ResponsiveHelper.getProportionateFontSize(2.0) * MediaQuery.of(context).textScaleFactor;
+                const double nameLineHeightFactor = 1.2;
+                final double nameTextHeight = nameFontSize * nameLineHeightFactor;
+                final double spacingBelowName = ResponsiveHelper.getProportionateSpacing(2.0);
+                final double btnFontSize = ResponsiveHelper.getProportionateFontSize(1.6) * MediaQuery.of(context).textScaleFactor;
+                final double btnIconSize = ResponsiveHelper.getProportionateFontSize(2.0);
+                final double btnVerticalPad = ResponsiveHelper.getProportionateSpacing(1.2);
+                final double connectButtonsHeight = (btnVerticalPad * 2) + (btnFontSize > btnIconSize ? btnFontSize : btnIconSize);
+                final double headerVerticalPadEach = ResponsiveHelper.getProportionateSpacing(2.4);
+                final double headerVerticalPaddingTotal = headerVerticalPadEach * 2;
+                _headerHeightMobileEstimate = headerVerticalPaddingTotal + profileSize + spacingAboveName + nameTextHeight + spacingBelowName + connectButtonsHeight;
+                headerIconSize = (_headerHeightMobileEstimate ?? 0) / 5;
+                return const SizedBox.shrink();
+              },
+            ),
           // محتوای اصلی هدر
           ResponsiveHelper.isMobile(context)
               ? _buildMobileHeader()
@@ -252,24 +275,50 @@ class _CustomResumePageState extends State<CustomResumePage> {
             top: 0,
             left: Directionality.of(context) == TextDirection.rtl ? 0 : null,
             right: Directionality.of(context) == TextDirection.rtl ? null : 0,
-            child: Row(
-              children: [
-                _buildContactButton(),
-                const SizedBox(width: 8),
-                _buildThemeToggleButton(),
-                const SizedBox(width: 8),
-                _buildLanguageToggleButton(),
-                const SizedBox(width: 8),
-              ],
-            ),
+            child: ResponsiveHelper.isMobile(context)
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildContactButton(),
+                      SizedBox(height: ResponsiveHelper.getProportionateSpacing(headerIconSize/5)),
+                      _buildThemeToggleButton(),
+                      SizedBox(height: ResponsiveHelper.getProportionateSpacing(headerIconSize/5)),
+                      _buildLanguageToggleButton(),
+                    ],
+                  )
+                : Row(
+                    children: [
+                      _buildContactButton(),
+                      const SizedBox(width: 8),
+                      _buildThemeToggleButton(),
+                      const SizedBox(width: 8),
+                      _buildLanguageToggleButton(),
+                      const SizedBox(width: 8),
+                    ],
+                  ),
           ),
         ],
       ),
     );
   }
-
+  
+// حذف شد: اندازه آیکون هدر به صورت داینامیک از headerIconSize محاسبه می‌شود
   // دکمه تماس
   Widget _buildContactButton() {
+    if (ResponsiveHelper.isMobile(context)) {
+      return IconButton(
+        onPressed: _showContactDialog,
+        icon: Icon(
+          Icons.contact_phone,
+          color: Theme.of(context).colorScheme.onSurface,
+          size: headerIconSize,
+        ),
+        padding: EdgeInsets.zero,
+        visualDensity: VisualDensity.compact,
+        constraints: const BoxConstraints(),
+        tooltip: 'Contact',
+      );
+    }
     return Container(
       margin: ResponsiveHelper.isDesktop(context)
           ? EdgeInsets.zero
@@ -285,9 +334,7 @@ class _CustomResumePageState extends State<CustomResumePage> {
           backgroundColor:
               Theme.of(context).colorScheme.surface.withOpacity(0.8),
           shape: const CircleBorder(),
-          padding: ResponsiveHelper.isDesktop(context)
-              ? EdgeInsets.zero
-              : const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
         ),
         tooltip: 'Contact',
       ),
@@ -347,6 +394,22 @@ class _CustomResumePageState extends State<CustomResumePage> {
 
   // دکمه تغییر تم
   Widget _buildThemeToggleButton() {
+    if (ResponsiveHelper.isMobile(context)) {
+      return IconButton(
+        onPressed: widget.onThemeToggle,
+        icon: Icon(
+          widget.isDarkMode ? Icons.light_mode : Icons.dark_mode,
+          color: Theme.of(context).colorScheme.onSurface,
+          size: headerIconSize,
+        ),
+        padding: EdgeInsets.zero,
+        visualDensity: VisualDensity.compact,
+        constraints: const BoxConstraints(),
+        tooltip: widget.isDarkMode
+            ? AppLocalizations.of(context).lightTheme
+            : AppLocalizations.of(context).darkTheme,
+      );
+    }
     return Container(
       margin: ResponsiveHelper.isDesktop(context)
           ? EdgeInsets.zero
@@ -362,9 +425,7 @@ class _CustomResumePageState extends State<CustomResumePage> {
           backgroundColor:
               Theme.of(context).colorScheme.surface.withOpacity(0.8),
           shape: const CircleBorder(),
-          padding: ResponsiveHelper.isDesktop(context)
-              ? EdgeInsets.zero
-              : const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
         ),
         tooltip: widget.isDarkMode
             ? AppLocalizations.of(context).lightTheme
@@ -376,6 +437,22 @@ class _CustomResumePageState extends State<CustomResumePage> {
   Widget _buildLanguageToggleButton() {
     return Consumer<LocaleProvider>(
       builder: (context, localeProvider, child) {
+        if (ResponsiveHelper.isMobile(context)) {
+          return IconButton(
+            onPressed: () => localeProvider.toggleLocale(),
+            icon: Icon(
+              localeProvider.locale.languageCode == 'fa'
+                  ? Icons.language
+                  : Icons.translate,
+              color: Theme.of(context).colorScheme.onSurface,
+              size: headerIconSize,
+            ),
+            padding: EdgeInsets.zero,
+            visualDensity: VisualDensity.compact,
+            constraints: const BoxConstraints(),
+            tooltip: AppLocalizations.of(context).changeLanguage,
+          );
+        }
         return Container(
           margin: ResponsiveHelper.isDesktop(context)
               ? EdgeInsets.zero
@@ -393,9 +470,7 @@ class _CustomResumePageState extends State<CustomResumePage> {
               backgroundColor:
                   Theme.of(context).colorScheme.surface.withOpacity(0.8),
               shape: const CircleBorder(),
-              padding: ResponsiveHelper.isDesktop(context)
-                  ? EdgeInsets.zero
-                  : const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
             ),
             tooltip: AppLocalizations.of(context).changeLanguage,
           ),
@@ -426,7 +501,7 @@ class _CustomResumePageState extends State<CustomResumePage> {
         Text(
           AppLocalizations.of(context).personName,
           style: TextStyle(
-            fontSize: ResponsiveHelper.getProportionateFontSize(2.0),
+            fontSize: ResponsiveHelper.getProportionateFontSize(4.0),
             fontWeight: FontWeight.bold,
             color: Theme.of(context).colorScheme.onSurface,
           ),
@@ -745,7 +820,7 @@ class _ConnectButton extends StatelessWidget {
                 style: TextStyle(
                   fontSize: ResponsiveHelper.isDesktop(context)
                       ? ResponsiveHelper.getProportionateFontSize(1.0)
-                      : ResponsiveHelper.getProportionateFontSize(1.6),
+                      : ResponsiveHelper.getProportionateFontSize(3.0),
                   color: color,
                   fontWeight: FontWeight.bold,
                 ),
@@ -760,7 +835,7 @@ class _ConnectButton extends StatelessWidget {
                 color: color,
                 size: ResponsiveHelper.isDesktop(context)
                     ? ResponsiveHelper.getProportionateFontSize(1.2)
-                    : ResponsiveHelper.getProportionateFontSize(2.0),
+                    : ResponsiveHelper.getProportionateFontSize(3.0),
               ),
             ],
           ),
