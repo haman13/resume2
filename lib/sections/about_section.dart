@@ -26,6 +26,7 @@ class _AboutSectionState extends State<AboutSection> {
           backgroundColor: AppTheme.greenCardBackground(context),
           child: Column(
             children: [
+              // NOTE(desktop): نسبت فونت کارت معرفی در دسکتاپ نهایی شده
               Text(
                 AppLocalizations.of(context).aboutIntroP1,
                 style: TextStyle(
@@ -35,6 +36,7 @@ class _AboutSectionState extends State<AboutSection> {
                 ),
               ),
               SizedBox(height: ResponsiveHelper.getProportionateSpacing(1.2)),
+              // NOTE(desktop): نسبت فونت کارت معرفی در دسکتاپ نهایی شده
               Text(
                 AppLocalizations.of(context).aboutIntroP2,
                 style: TextStyle(
@@ -53,6 +55,7 @@ class _AboutSectionState extends State<AboutSection> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // NOTE(desktop): نسبت فونت کارت تحصیلات در دسکتاپ نهایی شده
               Text(
                 AppLocalizations.of(context).aboutEducationP1,
                 style: TextStyle(
@@ -62,6 +65,7 @@ class _AboutSectionState extends State<AboutSection> {
                 ),
               ),
               SizedBox(height: ResponsiveHelper.getProportionateSpacing(1.2)),
+              // NOTE(desktop): نسبت فونت کارت تحصیلات در دسکتاپ نهایی شده
               Text(
                 AppLocalizations.of(context).aboutEducationP2,
                 style: TextStyle(
@@ -80,6 +84,7 @@ class _AboutSectionState extends State<AboutSection> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // NOTE(desktop): نسبت فونت کارت MITB در دسکتاپ نهایی شده
               Text(
                 AppLocalizations.of(context).aboutMitbP1,
                 style: TextStyle(

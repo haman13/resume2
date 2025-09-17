@@ -34,11 +34,13 @@ class SkillsSection extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // NOTE(desktop): فاصله عنوان کارت مهارت تا محتوا در دسکتاپ نهایی شده
                   SizedBox(height: ResponsiveHelper.getProportionateSpacing(1.0)),
                   Wrap(
                     spacing: ResponsiveHelper.getProportionateSpacing(0.8),
                     runSpacing: ResponsiveHelper.getProportionateSpacing(0.8),
                     children: entry.value.map((skill) {
+                      // NOTE(desktop): نسبت فونت چیپ مهارت‌ها در دسکتاپ نهایی شده
                       return Chip(
                         label: Text(
                           skill,

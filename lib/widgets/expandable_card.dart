@@ -50,6 +50,7 @@ class _ExpandableCardState extends State<ExpandableCard> {
               child: Row(
                 children: [
                   Expanded(
+                    // NOTE(desktop): نسبت فونت تیتر کارت‌ها در دسکتاپ نهایی شده
                     child: Text(
                       widget.title,
                       style: TextStyle(

@@ -231,6 +231,7 @@ class _CustomResumePageState extends State<CustomResumePage> {
   Widget _buildHeader() {
     return Container(
       color: AppTheme.headerBackground(context),
+      // NOTE(desktop): ارتفاع هدر برای دسکتاپ نهایی شده؛ برای موبایل/تبلت تغییر ندهید
       height: ResponsiveHelper.isDesktop(context)
           ? ResponsiveHelper.getProportionateScreenHeight(15.0)
           : null,
@@ -506,6 +507,7 @@ class _CustomResumePageState extends State<CustomResumePage> {
         // دکمه‌های اتصال - سمت چپ
         Expanded(
           child: Padding(
+            // NOTE(desktop): فاصله عمودی ردیف دکمه‌های اتصال برای دسکتاپ نهایی شده
             padding: EdgeInsets.only(
               top: ResponsiveHelper.getProportionateSpacing(1.5),
             ),
@@ -527,7 +529,8 @@ class _CustomResumePageState extends State<CustomResumePage> {
                     }
                   },
                 ),
-                SizedBox(width: ResponsiveHelper.getProportionateSpacing(1.0)),
+              // NOTE(desktop): فاصله بین دکمه‌های اتصال در دسکتاپ نهایی شده
+              SizedBox(width: ResponsiveHelper.getProportionateSpacing(1.0)),
                 _ConnectButton(
                   icon: FontAwesomeIcons.linkedin,
                   label: AppLocalizations.of(context).connectLinkedin,
@@ -678,7 +681,7 @@ class _CustomResumePageState extends State<CustomResumePage> {
         );
       },
       child: KeyedSubtree(
-        key: ValueKey(_selectedSection),
+        key: ValueKey('${_selectedSection}_${MediaQuery.of(context).size.width.round()}_${MediaQuery.of(context).size.height.round()}'),
         child: content,
       ),
     );
