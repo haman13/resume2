@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter/foundation.dart';
 import 'custom_resume_page.dart';
 import 'theme.dart';
 import 'providers/project_provider.dart';
@@ -12,11 +13,13 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
-  // قفل کردن جهت صفحه به صورت عمودی
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
+  // قفل کردن جهت صفحه به صورت عمودی (فقط برای موبایل)
+  if (!kIsWeb) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+  }
 
   // مقداردهی اولیه Supabase
   await SupabaseService.instance.initialize();
