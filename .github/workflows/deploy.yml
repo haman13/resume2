@@ -27,12 +27,15 @@ jobs:
       run: flutter test
       
     - name: Build web
-      run: flutter build web --release --base-href /resume/
+      run: flutter build web --release
       
+    - name: Copy to docs folder
+      run: |
+        cp -r build/web/* docs/
+        
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./build/web
-        cname: # اگر دامنه سفارشی دارید، اینجا وارد کنید
+        publish_dir: ./docs
