@@ -61,7 +61,7 @@ app.*.map.json
 Thumbs.db
 
 # GitHub Pages
-/docs/
+# /docs/ - Commented out to allow docs folder for GitHub Pages
 
 # Temporary files
 *.tmp
