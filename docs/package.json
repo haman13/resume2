@@ -4,9 +4,9 @@
   "description": "رزومه آنلاین هامان درویش - توسعه‌دهنده Flutter",
   "main": "index.html",
   "scripts": {
-    "build": "flutter build web --release --base-href /resume/",
+    "build": "flutter build web --release --base-href /resume2/",
     "dev": "flutter run -d web-server --web-port 3000",
-    "deploy": "flutter build web --release --base-href /resume/ && gh-pages -d build/web"
+    "deploy": "flutter build web --release --base-href /resume2/ && gh-pages -d build/web"
   },
   "keywords": [
     "resume",
@@ -18,13 +18,13 @@
   ],
   "author": "هامان درویش",
   "license": "MIT",
-  "homepage": "https://haman13.github.io/resume/",
+  "homepage": "https://haman13.github.io/resume2/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/haman13/resume.git"
+    "url": "https://github.com/haman13/resume2.git"
   },
   "bugs": {
-    "url": "https://github.com/haman13/resume/issues"
+    "url": "https://github.com/haman13/resume2/issues"
   },
   "devDependencies": {
     "gh-pages": "^6.0.0"

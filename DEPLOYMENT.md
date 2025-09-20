@@ -28,11 +28,11 @@
 
 ```bash
 # کلون کردن repository
-git clone https://github.com/haman13/resume.git
-cd resume
+git clone https://github.com/haman13/resume2.git
+cd resume2
 
 # اضافه کردن remote
-git remote add origin https://github.com/haman13/resume.git
+git remote add origin https://github.com/haman13/resume2.git
 
 # push کردن کد
 git add .
@@ -47,7 +47,7 @@ git push -u origin main
 flutter pub get
 
 # build برای web
-flutter build web --release --base-href /resume/
+flutter build web --release --base-href /resume2/
 
 # اجرای محلی
 flutter run -d web-server --web-port 3000
@@ -57,7 +57,7 @@ flutter run -d web-server --web-port 3000
 
 بعد از deployment موفق، رزومه شما در آدرس زیر در دسترس خواهد بود:
 
-**https://haman13.github.io/resume/**
+**https://haman13.github.io/resume2/**
 
 ## 🔄 به‌روزرسانی
 
@@ -79,7 +79,7 @@ flutter run -d web-server --web-port 3000
 اگر می‌خواهید base URL را تغییر دهید:
 
 1. فایل `.github/workflows/deploy.yml` را ویرایش کنید
-2. `--base-href /resume/` را به URL مورد نظر تغییر دهید
+2. `--base-href /resume2/` را به URL مورد نظر تغییر دهید
 3. فایل `web/index.html` را نیز به‌روزرسانی کنید
 
 ### دامنه سفارشی

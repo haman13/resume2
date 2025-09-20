@@ -4,17 +4,17 @@
   
   <!-- Homepage -->
   <url>
-    <loc>https://haman13.github.io/resume/</loc>
+    <loc>https://haman13.github.io/resume2/</loc>
     <lastmod>2024-01-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="fa" href="https://haman13.github.io/resume/?lang=fa"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://haman13.github.io/resume/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://haman13.github.io/resume2/?lang=fa"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://haman13.github.io/resume2/?lang=en"/>
   </url>
   
   <!-- Projects page -->
   <url>
-    <loc>https://haman13.github.io/resume/#projects</loc>
+    <loc>https://haman13.github.io/resume2/#projects</loc>
     <lastmod>2024-01-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -22,7 +22,7 @@
   
   <!-- Skills page -->
   <url>
-    <loc>https://haman13.github.io/resume/#skills</loc>
+    <loc>https://haman13.github.io/resume2/#skills</loc>
     <lastmod>2024-01-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -30,7 +30,7 @@
   
   <!-- Experience page -->
   <url>
-    <loc>https://haman13.github.io/resume/#experience</loc>
+    <loc>https://haman13.github.io/resume2/#experience</loc>
     <lastmod>2024-01-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -38,7 +38,7 @@
   
   <!-- About page -->
   <url>
-    <loc>https://haman13.github.io/resume/#about</loc>
+    <loc>https://haman13.github.io/resume2/#about</loc>
     <lastmod>2024-01-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>

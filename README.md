@@ -8,7 +8,7 @@
 
 ## 🌐 مشاهده آنلاین
 
-[**🔗 مشاهده رزومه آنلاین**](https://haman13.github.io/resume/)
+[**🔗 مشاهده رزومه آنلاین**](https://haman13.github.io/resume2/)
 
 ## ✨ ویژگی‌ها
 
@@ -41,8 +41,8 @@
 ### نصب و اجرا
 ```bash
 # کلون کردن پروژه
-git clone https://github.com/haman13/resume.git
-cd resume
+git clone https://github.com/haman13/resume2.git
+cd resume2
 
 # نصب dependencies
 flutter pub get
@@ -106,7 +106,7 @@ lib/
 ## 📞 تماس
 
 - **GitHub**: [@haman13](https://github.com/haman13)
-- **Email**: hamancodes@example.com
+- **Email**: hamancodes@gmail.com
 - **LinkedIn**: https://www.linkedin.com/in/haman-darvish-6a489a25a/
 
 ---
